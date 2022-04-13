@@ -1,0 +1,54 @@
+package com.readingTracker.web;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.readingTracker.data.entity.Log;
+import com.readingTracker.data.repository.LogRepository;
+import com.readingTracker.web.domain.LogModelAssembler;
+
+@RestController @RequestMapping("/logs/")
+public class LogController {
+	private final LogRepository repository;
+	private final LogModelAssembler assembler;
+	@Autowired
+	public LogController(LogRepository logRepository, LogModelAssembler logModelAssembler) {
+		this.repository = logRepository;
+		this.assembler = logModelAssembler;
+	}
+	
+	@PostMapping("/save")
+	ResponseEntity<?> save(@RequestBody Log newLog) {
+		EntityModel<Log> entityModel = assembler.toModel(repository.save(newLog));
+		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
+	}
+	
+	@GetMapping("/{id}")
+	public EntityModel<Log> one(@PathVariable Long id) {
+		Log log = repository.getById(id);
+		return assembler.toModel(log);
+	}
+	
+	@GetMapping("/all")
+	public CollectionModel<EntityModel<Log>> all() {
+		List<EntityModel<Log>> logs = repository.findAll().stream()
+				.map(assembler::toModel)
+				.collect(Collectors.toList());
+		return CollectionModel.of(logs, linkTo(methodOn(LogController.class).all()).withSelfRel());
+	}
+}

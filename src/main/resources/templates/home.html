@@ -1,0 +1,47 @@
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Bookshelf</title>
+	<link th:href="@{/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+<header>
+    <h1>Reading Tracker</h1>
+</header>
+<nav>
+    <div class="menu">
+		<a href="/addBook">Add Book</a>
+		<a href="/addLog">Add Log</a>
+    </div>
+</nav>
+<main>
+    <table th:unless="${books == null}">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Language</th>
+            <th>Pages</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book: ${books}">
+            <td><a th:href="@{/view/{id}(id=${book.id})}"><span th:text="${book.title}"></span></a></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.language}"></td>
+            <td th:text="${book.pages}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</div>
+</body>
+</html>
