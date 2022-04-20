@@ -20,21 +20,21 @@ public class Log implements Serializable {
 	private LocalDate start;
 	private LocalDate finish;
 	@ManyToOne
-	private ReadingList readingList;
+	private AppUser user;
 	
 	public Log() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Log(Book book, LocalDate start, LocalDate finish, ReadingList readingList) {
+	public Log(Long id, Book book, LocalDate start, LocalDate finish, AppUser user) {
 		super();
+		this.id = id;
 		this.book = book;
 		this.start = start;
 		this.finish = finish;
-		this.readingList = readingList;
+		this.user = user;
 	}
-
 
 	public Book getBook() {
 		return book;
@@ -46,10 +46,6 @@ public class Log implements Serializable {
 
 	public Long getId() {
 		return id;
-	}
-
-	public ReadingList getReadingList() {
-		return readingList;
 	}
 
 	public LocalDate getStart() {
@@ -64,17 +60,22 @@ public class Log implements Serializable {
 		this.finish = finish;
 	}
 
-	public void setReadingList(ReadingList readingList) {
-		this.readingList = readingList;
-	}
-
 	public void setStart(LocalDate start) {
 		this.start = start;
 	}
 
+	public AppUser getUser() {
+		return user;
+	}
+
+	public void setUser(AppUser user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
-		return "Log [id=" + id + ", book=" + book + ", start=" + start + ", finish=" + finish + ", readingList="
-				+ readingList + "]";
+		return "Log [id=" + id + ", book=" + book + ", start=" + start + ", finish=" + finish + ", user=" + user.getName() + "]";
 	}
+
+
 }

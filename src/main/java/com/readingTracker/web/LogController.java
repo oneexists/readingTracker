@@ -19,34 +19,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.readingTracker.data.entity.Log;
-import com.readingTracker.data.repository.LogRepository;
+import com.readingTracker.service.LogService;
 import com.readingTracker.web.domain.LogModelAssembler;
 
 @RestController @RequestMapping("/logs")
 public class LogController {
-	private final LogRepository repository;
+	private final LogService service;
 	private final LogModelAssembler assembler;
 	@Autowired
-	public LogController(LogRepository logRepository, LogModelAssembler logModelAssembler) {
-		this.repository = logRepository;
+	public LogController(LogService service, LogModelAssembler logModelAssembler) {
+		this.service = service;
 		this.assembler = logModelAssembler;
 	}
 	
 	@PostMapping("/save")
 	ResponseEntity<?> save(@RequestBody Log newLog) {
-		EntityModel<Log> entityModel = assembler.toModel(repository.save(newLog));
+		EntityModel<Log> entityModel = assembler.toModel(service.saveLog(newLog));
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
 	
 	@GetMapping("{id}")
 	public EntityModel<Log> get(@PathVariable Long id) {
-		Log log = repository.getById(id);
-		return assembler.toModel(log);
+		return assembler.toModel(service.findById(id));
 	}
 	
 	@GetMapping("/all")
 	public CollectionModel<EntityModel<Log>> all() {
-		List<EntityModel<Log>> logs = repository.findAll().stream()
+		List<EntityModel<Log>> logs = service.allLogs().stream()
 				.map(assembler::toModel)
 				.collect(Collectors.toList());
 		return CollectionModel.of(logs, linkTo(methodOn(LogController.class).all()).withSelfRel());
