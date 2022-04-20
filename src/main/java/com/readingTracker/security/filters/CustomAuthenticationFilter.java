@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.readingTracker.security.JwtUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private final AuthenticationManager authenticationManager;
@@ -39,11 +38,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authentication) throws IOException, ServletException {
-		User user = (User) authentication.getPrincipal();
-		
+			Authentication authentication) throws IOException, ServletException {		
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-		new ObjectMapper().writeValue(response.getOutputStream(), jwtUtil.generateTokenResponse(user));
+		response.addHeader("access_token", jwtUtil.generateAccessToken((User) authentication.getPrincipal()));
 	}
 
 }

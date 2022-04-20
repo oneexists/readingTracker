@@ -19,9 +19,7 @@ import static java.util.Arrays.stream;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -50,21 +48,6 @@ public class JwtUtil {
 	
     private String[] getClaimsFromAppUser(AppUser appUser) {
     	return appUser.getUserRole().getAuthorities();
-    }
-
-	public String generateRefreshToken(User user) {
-    	return JWT.create()
-                .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME * 2))
-                .withIssuer(SecurityConstants.TRACKERS_APPLICATION)
-                .sign(HMAC512(secret.getBytes()));
-    }
-    
-    public Map<String, String> generateTokenResponse(User user) {
-    	Map<String, String> tokens = new HashMap<>();
-        tokens.put("access_token", generateAccessToken(user));
-        tokens.put("refresh_token", generateRefreshToken(user));
-		return tokens;
     }
 
 	public String getSubject(String token) {
