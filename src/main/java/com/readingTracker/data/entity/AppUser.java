@@ -2,6 +2,7 @@ package com.readingTracker.data.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,8 +27,10 @@ public class AppUser implements Serializable {
 	private LocalDate dateOfBirth;
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
-	@OneToOne
-	private ReadingList readingList;
+	@OneToMany(mappedBy = "user")
+	private Set<Book> books;
+	@OneToMany(mappedBy = "user")
+	private Set<Log> logs;
 	
 	public AppUser() {
 		super();
@@ -77,7 +80,7 @@ public class AppUser implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -90,14 +93,6 @@ public class AppUser implements Serializable {
 	public String toString() {
 		return "AppUser [userId=" + userId + ", name=" + name + ", username=" + username + ", password=" + password
 				+ ", dateOfBirth=" + dateOfBirth + ", userRole=" + userRole + "]";
-	}
-
-	public ReadingList getReadingList() {
-		return readingList;
-	}
-
-	public void setReadingList(ReadingList readingList) {
-		this.readingList = readingList;
 	}
 	
 }
