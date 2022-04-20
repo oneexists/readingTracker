@@ -40,7 +40,6 @@ public class AppUser implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 		this.name = name;
 		this.userRole = UserRole.ROLE_USER;
-		this.readingList = new ReadingList(this);
 	}
 	
 	public LocalDate getDateOfBirth() {
