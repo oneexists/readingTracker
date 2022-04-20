@@ -19,34 +19,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.readingTracker.data.entity.Book;
-import com.readingTracker.data.repository.BookRepository;
+import com.readingTracker.service.BookService;
 import com.readingTracker.web.domain.BookModelAssembler;
 
 @RestController @RequestMapping("/books")
 public class BookController {
-	private final BookRepository repository;
+	private final BookService service;
 	private final BookModelAssembler assembler;
+	
 	@Autowired
-	public BookController(BookRepository bookRepository, BookModelAssembler bookModelAssembler) {
-		this.repository = bookRepository;
+	public BookController(BookService service, BookModelAssembler bookModelAssembler) {
+		this.service = service;
 		this.assembler = bookModelAssembler;
 	}
 	
 	@PostMapping("/save")
-	ResponseEntity<?> save(@RequestBody Book newBook) {
-		EntityModel<Book> entityModel = assembler.toModel(repository.save(newBook));
+	ResponseEntity<EntityModel<Book>> save(@RequestBody Book newBook) {
+		EntityModel<Book> entityModel = assembler.toModel(service.saveBook(newBook));
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
 	
 	@GetMapping("{id}")
 	public EntityModel<Book> get(@PathVariable Long id) {
-		Book book = repository.getById(id);
-		return assembler.toModel(book);
+		return assembler.toModel(service.findById(id));
 	}
 	
 	@GetMapping("/all")
 	public CollectionModel<EntityModel<Book>> all() {
-		List<EntityModel<Book>> books = repository.findAll().stream()
+		List<EntityModel<Book>> books = service.allBooks().stream()
 				.map(assembler::toModel)
 				.collect(Collectors.toList());
 		return CollectionModel.of(books, linkTo(methodOn(BookController.class).all()).withSelfRel());
