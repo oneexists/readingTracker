@@ -22,7 +22,7 @@ import com.readingTracker.data.entity.Log;
 import com.readingTracker.data.repository.LogRepository;
 import com.readingTracker.web.domain.LogModelAssembler;
 
-@RestController @RequestMapping("/logs/")
+@RestController @RequestMapping("/logs")
 public class LogController {
 	private final LogRepository repository;
 	private final LogModelAssembler assembler;
@@ -38,8 +38,8 @@ public class LogController {
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
 	
-	@GetMapping("/{id}")
-	public EntityModel<Log> one(@PathVariable Long id) {
+	@GetMapping("{id}")
+	public EntityModel<Log> get(@PathVariable Long id) {
 		Log log = repository.getById(id);
 		return assembler.toModel(log);
 	}

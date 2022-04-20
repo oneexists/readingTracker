@@ -16,7 +16,7 @@ import com.readingTracker.web.BookController;
 public class LogModelAssembler implements RepresentationModelAssembler<Log, EntityModel<Log>> {
 	@Override
 	public EntityModel<Log> toModel(Log log) {
-		return EntityModel.of(log, linkTo(methodOn(BookController.class).one(log.getId())).withSelfRel(),
+		return EntityModel.of(log, linkTo(methodOn(BookController.class).get(log.getId())).withSelfRel(),
 				linkTo(methodOn(BookController.class).all()).withRel("books"));
 	}
 }

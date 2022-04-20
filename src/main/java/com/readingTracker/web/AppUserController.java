@@ -22,7 +22,7 @@ import com.readingTracker.data.repository.AppUserRepository;
 import com.readingTracker.web.domain.AppUserModelAssembler;
 import com.readingTracker.data.entity.AppUser;
 
-@RestController @RequestMapping("/users/")
+@RestController @RequestMapping("/users")
 public class AppUserController {
 	private final AppUserRepository repository;
 	private final AppUserModelAssembler assembler;
@@ -39,8 +39,8 @@ public class AppUserController {
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
 	
-	@GetMapping("/{id}")
-	public EntityModel<AppUser> one(@PathVariable Long id) {
+	@GetMapping("{id}")
+	public EntityModel<AppUser> get(@PathVariable Long id) {
 		AppUser user = repository.getById(id);
 		return assembler.toModel(user);
 	}

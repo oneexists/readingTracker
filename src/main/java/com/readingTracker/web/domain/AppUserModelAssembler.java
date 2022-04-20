@@ -14,7 +14,7 @@ public class AppUserModelAssembler implements RepresentationModelAssembler<AppUs
 
 	@Override
 	public EntityModel<AppUser> toModel(AppUser appUser) {
-		return EntityModel.of(appUser, linkTo(methodOn(AppUserController.class).one(appUser.getUserId())).withSelfRel(),
+		return EntityModel.of(appUser, linkTo(methodOn(AppUserController.class).get(appUser.getUserId())).withSelfRel(),
 				linkTo(methodOn(AppUserController.class).all()).withRel("users"));
 	}
 

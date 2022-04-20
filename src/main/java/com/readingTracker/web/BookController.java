@@ -22,7 +22,7 @@ import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.repository.BookRepository;
 import com.readingTracker.web.domain.BookModelAssembler;
 
-@RestController @RequestMapping("/books/")
+@RestController @RequestMapping("/books")
 public class BookController {
 	private final BookRepository repository;
 	private final BookModelAssembler assembler;
@@ -38,8 +38,8 @@ public class BookController {
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
 	
-	@GetMapping("/{id}")
-	public EntityModel<Book> one(@PathVariable Long id) {
+	@GetMapping("{id}")
+	public EntityModel<Book> get(@PathVariable Long id) {
 		Book book = repository.getById(id);
 		return assembler.toModel(book);
 	}
