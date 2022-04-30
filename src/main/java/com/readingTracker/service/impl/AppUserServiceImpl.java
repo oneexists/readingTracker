@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 
 import static java.util.Arrays.stream;
 
+import java.util.List;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.repository.AppUserRepository;
 import com.readingTracker.service.AppUserService;
+import com.readingTracker.web.exceptions.AppUserNotFoundException;
 
 @Service @Transactional
 public class AppUserServiceImpl implements AppUserService {
@@ -45,5 +48,35 @@ public class AppUserServiceImpl implements AppUserService {
 		String[] claims = appUser.getUserRole().getAuthorities();
 		Set<SimpleGrantedAuthority> authorities = stream(claims).map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
 		return new User(appUser.getUsername(), appUser.getPassword(), authorities);
+	}
+	
+	@Override
+	public AppUser getUser(Long id) {
+		return appUserRepository.findById(id).orElseThrow(() -> new AppUserNotFoundException(id));
+	}
+
+	@Override
+	public List<AppUser> getAllUsers() {
+		return appUserRepository.findAll();
+	}
+
+	@Override
+	public AppUser updateUser(AppUser appUser) {
+		return appUserRepository.findById(appUser.getUserId())
+				.map(user -> {
+					user.setName(appUser.getName());
+					user.setUsername(appUser.getUsername());
+					user.setPassword(appUser.getPassword());
+					user.setDateOfBirth(appUser.getDateOfBirth());
+					return appUserRepository.saveAndFlush(user);
+				})
+				.orElseGet(() -> {
+					return appUserRepository.save(appUser);
+				});
+	}
+
+	@Override
+	public void delete(Long id) {
+		appUserRepository.deleteById(id);
 	}
 }
