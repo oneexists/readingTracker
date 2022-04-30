@@ -21,9 +21,9 @@ import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.impl.AppUserServiceImpl;
 
 /**
- * Tests for AppUserService
- * 
  * @author skylar
+ * 
+ * Tests for AppUserService
  */
 @SpringBootTest
 class AppUserServiceTests {
@@ -50,7 +50,8 @@ class AppUserServiceTests {
 	}
 
 	/**
-	 * Test save new app user
+	 * Test save new app user <br />
+	 * Test method for {@link com.readingTracker.service.impl.AppUserServiceImpl#saveUser(com.readingTracker.data.entity.AppUser)}
 	 */
 	@Test
 	void testSaveUser() {
@@ -61,7 +62,8 @@ class AppUserServiceTests {
 	}
 
 	/**
-	 * Test find by app user id
+	 * Test find by app user id <br />
+	 * Test method for {@link com.readingTracker.service.impl.AppUserServiceImpl#getUser(java.lang.Long)}
 	 */
 	@Test
 	void testGetUser() {
@@ -73,7 +75,8 @@ class AppUserServiceTests {
 	}
 
 	/**
-	 * Test get all app users
+	 * Test get all app users <br />
+	 * Test method for {@link com.readingTracker.service.impl.AppUserServiceImpl#getAllUsers()}.
 	 */
 	@Test
 	void testGetAllUsers() {
@@ -82,7 +85,8 @@ class AppUserServiceTests {
 	}
 
 	/**
-	 * Test update app user
+	 * Test update app user <br />
+	 * Test method for {@link com.readingTracker.service.impl.AppUserServiceImpl#updateUser(com.readingTracker.data.entity.AppUser)}
 	 */
 	@Test
 	void testUpdateUser() {
@@ -95,7 +99,8 @@ class AppUserServiceTests {
 	}
 
 	/**
-	 * Test delete app user
+	 * Test delete app user <br />
+	 * Test method for {@link com.readingTracker.service.impl.AppUserServiceImpl#delete(java.lang.Long)}
 	 */
 	@Test
 	void testDelete() {
