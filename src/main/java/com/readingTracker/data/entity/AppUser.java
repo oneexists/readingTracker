@@ -45,6 +45,16 @@ public class AppUser implements Serializable {
 		this.userRole = UserRole.ROLE_USER;
 	}
 	
+	public AppUser(Long userId, String name, String username, String password, LocalDate dateOfBirth) {
+		super();
+		this.userId = userId;
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.dateOfBirth = dateOfBirth;
+		this.userRole = UserRole.ROLE_USER;
+	}
+
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
