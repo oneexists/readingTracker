@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,6 +83,32 @@ class BookServiceTests {
 	void testAllBooks() {
 		service.getAllBooks();
 		verify(repository).findAll();
+	}
+	
+	/**
+	 * Test method for {@link com.readingTracker.service.impl.BookServiceImpl#updateBook(com.readingTracker.data.entity.Book)}.
+	 */
+	@Test
+	void testUpdateBook() {
+		given(repository.findById(testBook.getId())).willReturn(Optional.of(testBook));
+		testBook.setTitle("new title");
+		testBook.setAuthor("different author");
+		service.updateBook(testBook);
+		ArgumentCaptor<Book> updateArgCaptor = ArgumentCaptor.forClass(Book.class);
+		verify(repository).saveAndFlush(updateArgCaptor.capture());
+		assertThat(updateArgCaptor.getValue()).isEqualTo(testBook);
+	}
+	
+	/**
+	 * Test method for {@link com.readingTracker.service.impl.BookServiceImpl#deleteBook(java.lang.Long)}.
+	 */
+	@Test
+	void testDeleteBook() {
+		given(repository.existsById(testBook.getId())).willReturn(true);
+		service.deleteBook(testBook.getId());
+		ArgumentCaptor<Long> deleteArgCaptor = ArgumentCaptor.forClass(Long.class);
+		verify(repository).deleteById(deleteArgCaptor.capture());
+		assertThat(deleteArgCaptor.getValue()).isEqualTo(testBook.getId());
 	}
 
 }
