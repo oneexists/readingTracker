@@ -10,13 +10,13 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.readingTracker.data.entity.Log;
-import com.readingTracker.web.BookController;
+import com.readingTracker.web.LogController;
 
 @Component
 public class LogModelAssembler implements RepresentationModelAssembler<Log, EntityModel<Log>> {
 	@Override
 	public EntityModel<Log> toModel(Log log) {
-		return EntityModel.of(log, linkTo(methodOn(BookController.class).get(log.getId())).withSelfRel(),
-				linkTo(methodOn(BookController.class).all()).withRel("books"));
+		return EntityModel.of(log, linkTo(methodOn(LogController.class).get(log.getId())).withSelfRel(),
+				linkTo(methodOn(LogController.class).all()).withRel("books"));
 	}
 }
