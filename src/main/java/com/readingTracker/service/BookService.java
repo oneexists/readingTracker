@@ -7,5 +7,5 @@ import com.readingTracker.data.entity.Book;
 public interface BookService {
 	Book saveBook(Book book);
 	Book findById(Long id);
-	List<Book> allBooks();
+	List<Book> getAllBooks();
 }

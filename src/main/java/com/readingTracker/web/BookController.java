@@ -46,7 +46,7 @@ public class BookController {
 	
 	@GetMapping("/all")
 	public CollectionModel<EntityModel<Book>> all() {
-		List<EntityModel<Book>> books = service.allBooks().stream()
+		List<EntityModel<Book>> books = service.getAllBooks().stream()
 				.map(assembler::toModel)
 				.collect(Collectors.toList());
 		return CollectionModel.of(books, linkTo(methodOn(BookController.class).all()).withSelfRel());
