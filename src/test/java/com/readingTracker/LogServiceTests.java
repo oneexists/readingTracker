@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.Log;
+import com.readingTracker.data.entity.ReadingStatus;
 import com.readingTracker.data.repository.LogRepository;
 import com.readingTracker.service.LogService;
 import com.readingTracker.service.impl.LogServiceImpl;
@@ -44,7 +45,7 @@ class LogServiceTests {
 		service = new LogServiceImpl(repository);
 		appUser = new AppUser(1L, "Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25));
 		book = new Book(2L, "book title", "book author", "English", 32, new HashSet<>(), appUser);
-		testLog = new Log(3L, book, LocalDate.now().minusMonths(1), LocalDate.now(), appUser);
+		testLog = new Log(3L, book, ReadingStatus.FINISHED, LocalDate.now().minusMonths(1), LocalDate.now(), appUser);
 	}
 
 	/**

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.readingTracker.data.entity.Log;
+import com.readingTracker.data.entity.ReadingStatus;
 import com.readingTracker.service.LogService;
 import com.readingTracker.web.domain.LogModelAssembler;
 
@@ -36,6 +37,9 @@ public class LogController {
 	
 	@PostMapping("/save")
 	ResponseEntity<?> save(@RequestBody Log newLog) {
+		if (newLog.getStart() != null) { newLog.setStatus(ReadingStatus.IN_PROGRESS); }
+		if (newLog.getFinish() != null) { newLog.setStatus(ReadingStatus.FINISHED); }
+		
 		EntityModel<Log> entityModel = assembler.toModel(service.saveLog(newLog));
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
@@ -55,6 +59,8 @@ public class LogController {
 	
 	@PutMapping("{id}")
 	public ResponseEntity<?> updateLog(@RequestBody Log log, @PathVariable Long id) {
+		if (log.getStart() != null) { log.setStatus(ReadingStatus.IN_PROGRESS); }
+		if (log.getFinish() != null) { log.setStatus(ReadingStatus.FINISHED); }
 		EntityModel<Log> entityModel = assembler.toModel(service.updateLog(log));
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
