@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.repository.AppUserRepository;
 import com.readingTracker.service.AppUserService;
-import com.readingTracker.web.exceptions.AppUserNotFoundException;
+import com.readingTracker.service.exceptions.AppUserNotFoundException;
 
 @Service @Transactional
 public class AppUserServiceImpl implements AppUserService {

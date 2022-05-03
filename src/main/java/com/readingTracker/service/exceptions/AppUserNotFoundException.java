@@ -1,4 +1,4 @@
-package com.readingTracker.web.exceptions;
+package com.readingTracker.service.exceptions;
 
 public class AppUserNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 202204001L;
