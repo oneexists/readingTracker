@@ -54,12 +54,14 @@ public class LogController {
 	}
 	
 	@PutMapping("{id}")
-	public EntityModel<Log> updateLog(@RequestBody Log log, @PathVariable Long id) {
-		return assembler.toModel(service.updateLog(log));
+	public ResponseEntity<?> updateLog(@RequestBody Log log, @PathVariable Long id) {
+		EntityModel<Log> entityModel = assembler.toModel(service.updateLog(log));
+		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
 	
 	@DeleteMapping("{id}")
-	public void deleteLog(@PathVariable Long id) {
+	public ResponseEntity<?> deleteLog(@PathVariable Long id) {
 		service.deleteLog(id);
+		return ResponseEntity.noContent().build();
 	}
 }

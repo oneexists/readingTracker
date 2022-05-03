@@ -55,12 +55,14 @@ public class BookController {
 	}
 	
 	@PutMapping("{id}")
-	public EntityModel<Book> updateBook(@RequestBody Book updateBook, @PathVariable Long id) {
-		return assembler.toModel(service.updateBook(updateBook));
+	public ResponseEntity<?> updateBook(@RequestBody Book updateBook, @PathVariable Long id) {
+		EntityModel<Book> entityModel = assembler.toModel(service.updateBook(updateBook));
+		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
 	
 	@DeleteMapping("{id}")
-	public void deleteBook(@PathVariable Long id) {
+	public ResponseEntity<?> deleteBook(@PathVariable Long id) {
 		service.deleteBook(id);
+		return ResponseEntity.noContent().build();
 	}
 }

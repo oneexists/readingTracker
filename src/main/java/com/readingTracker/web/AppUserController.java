@@ -43,7 +43,7 @@ public class AppUserController {
 	}
 	
 	@PostMapping("/save")
-	public ResponseEntity<EntityModel<AppUser>> save(@RequestBody AppUser newUser) {
+	public ResponseEntity<?> save(@RequestBody AppUser newUser) {
 		EntityModel<AppUser> entityModel = assembler.toModel(service.saveUser(newUser));
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
@@ -55,13 +55,14 @@ public class AppUserController {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<EntityModel<AppUser>> update(@RequestBody AppUser appUser) {
+	public ResponseEntity<?> update(@RequestBody AppUser appUser) {
 		EntityModel<AppUser> entityModel = assembler.toModel(service.updateUser(appUser));
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
 	
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable Long id) {
 		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }
