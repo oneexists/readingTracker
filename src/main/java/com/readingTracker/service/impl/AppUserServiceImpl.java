@@ -71,6 +71,7 @@ public class AppUserServiceImpl implements AppUserService {
 					return appUserRepository.saveAndFlush(user);
 				})
 				.orElseGet(() -> {
+					appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
 					return appUserRepository.save(appUser);
 				});
 	}
