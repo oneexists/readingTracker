@@ -74,7 +74,7 @@ class LogServiceTests {
 	 */
 	@Test
 	void testFindById() {
-		given(repository.getById(testLog.getId())).willReturn(testLog);
+		given(repository.findById(testLog.getId())).willReturn(Optional.of(testLog));
 		assertThat(service.findById(testLog.getId())).isEqualTo(testLog);
 	}
 

@@ -72,7 +72,7 @@ class BookServiceTests {
 	 */
 	@Test
 	void testFindById() {
-		given(repository.getById(testBook.getId())).willReturn(testBook);
+		given(repository.findById(testBook.getId())).willReturn(Optional.of(testBook));
 		assertThat(service.findById(testBook.getId())).isEqualTo(testBook);
 	}
 

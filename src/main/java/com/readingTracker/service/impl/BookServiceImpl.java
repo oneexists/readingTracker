@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.repository.BookRepository;
 import com.readingTracker.service.BookService;
+import com.readingTracker.service.exceptions.BookNotFoundException;
 
 @Service @Transactional
 public class BookServiceImpl implements BookService {
@@ -27,7 +28,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Book findById(Long id) {
-		return repository.getById(id);
+		return repository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
 	}
 
 	@Override

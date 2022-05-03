@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.readingTracker.data.entity.Log;
 import com.readingTracker.data.repository.LogRepository;
 import com.readingTracker.service.LogService;
+import com.readingTracker.service.exceptions.LogNotFoundException;
 
 @Service @Transactional
 public class LogServiceImpl implements LogService {
@@ -26,7 +27,7 @@ public class LogServiceImpl implements LogService {
 
 	@Override
 	public Log findById(Long id) {
-		return repository.getById(id);
+		return repository.findById(id).orElseThrow(() -> new LogNotFoundException(id));
 	}
 
 	@Override
