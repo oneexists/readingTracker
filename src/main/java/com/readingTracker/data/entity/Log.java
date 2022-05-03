@@ -24,7 +24,6 @@ public class Log implements Serializable {
 	
 	public Log() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Log(Long id, Book book, LocalDate start, LocalDate finish, AppUser user) {

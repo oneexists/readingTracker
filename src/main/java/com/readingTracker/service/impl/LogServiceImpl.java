@@ -30,7 +30,7 @@ public class LogServiceImpl implements LogService {
 	}
 
 	@Override
-	public List<Log> allLogs() {
+	public List<Log> getAllLogs() {
 		return repository.findAll();
 	}
 }

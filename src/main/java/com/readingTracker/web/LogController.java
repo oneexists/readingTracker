@@ -45,7 +45,7 @@ public class LogController {
 	
 	@GetMapping("/all")
 	public CollectionModel<EntityModel<Log>> all() {
-		List<EntityModel<Log>> logs = service.allLogs().stream()
+		List<EntityModel<Log>> logs = service.getAllLogs().stream()
 				.map(assembler::toModel)
 				.collect(Collectors.toList());
 		return CollectionModel.of(logs, linkTo(methodOn(LogController.class).all()).withSelfRel());
