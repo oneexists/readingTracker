@@ -33,4 +33,24 @@ public class LogServiceImpl implements LogService {
 	public List<Log> getAllLogs() {
 		return repository.findAll();
 	}
+	
+	@Override
+	public Log updateLog(Log log) {
+		return repository.findById(log.getId())
+				.map(updateLog -> {
+					updateLog.setBook(log.getBook());
+					updateLog.setStart(log.getStart());
+					updateLog.setFinish(log.getFinish());
+					updateLog.setUser(log.getUser());
+					return repository.saveAndFlush(updateLog);
+				})
+				.orElseGet(() -> {
+					return repository.save(log);
+				});
+	}
+	
+	@Override
+	public void deleteLog(Long id) {
+		repository.deleteById(id);
+	}
 }

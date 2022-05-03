@@ -11,9 +11,11 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,5 +51,15 @@ public class LogController {
 				.map(assembler::toModel)
 				.collect(Collectors.toList());
 		return CollectionModel.of(logs, linkTo(methodOn(LogController.class).all()).withSelfRel());
+	}
+	
+	@PutMapping("{id}")
+	public EntityModel<Log> updateLog(@RequestBody Log log, @PathVariable Long id) {
+		return assembler.toModel(service.updateLog(log));
+	}
+	
+	@DeleteMapping("{id}")
+	public void deleteLog(@PathVariable Long id) {
+		service.deleteLog(id);
 	}
 }

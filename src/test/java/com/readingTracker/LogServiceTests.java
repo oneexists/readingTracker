@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -84,6 +85,32 @@ class LogServiceTests {
 	void testAllLogs() {
 		service.getAllLogs();
 		verify(repository).findAll();
+	}
+	
+	/**
+	 * Test method for {@link com.readingTracker.service.impl.LogServiceImpl#updateLog(com.readingTracker.data.entity.Log)}.
+	 */
+	@Test
+	void testUpdateLog() {
+		given(repository.findById(testLog.getId())).willReturn(Optional.of(testLog));
+		testLog.setStart(LocalDate.now().minusWeeks(1));
+		testLog.setFinish(LocalDate.now().minusDays(3));
+		service.updateLog(testLog);
+		ArgumentCaptor<Log> updateArgCaptor = ArgumentCaptor.forClass(Log.class);
+		verify(repository).saveAndFlush(updateArgCaptor.capture());
+		assertThat(updateArgCaptor.getValue()).isEqualTo(testLog);
+	}
+
+	/**
+	 * Test method for {@link com.readingTracker.service.impl.LogServiceImpl#deleteLog(java.lang.Long)}.
+	 */
+	@Test
+	void testDeleteLog() {
+		given(repository.existsById(testLog.getId())).willReturn(true);
+		service.deleteLog(testLog.getId());
+		ArgumentCaptor<Long> deleteArgCaptor = ArgumentCaptor.forClass(Long.class);
+		verify(repository).deleteById(deleteArgCaptor.capture());
+		assertThat(deleteArgCaptor.getValue()).isEqualTo(testLog.getId());
 	}
 
 }
