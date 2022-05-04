@@ -16,7 +16,8 @@ public class Book implements Serializable {
 	@Id @GeneratedValue
 	private Long id;
 	private String title;
-	private String author;
+	@ManyToOne
+	private Author author;
 	private String language;
 	private int pages;
 	@OneToMany(mappedBy = "book")
@@ -32,7 +33,7 @@ public class Book implements Serializable {
 		this.user = user;
 	}
 
-	public Book(Long id, String title, String author, String language, int pages, Set<Log> logs, AppUser user) {
+	public Book(Long id, String title, Author author, String language, int pages, Set<Log> logs, AppUser user) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -43,7 +44,7 @@ public class Book implements Serializable {
 		this.user = user;
 	}
 
-	public String getAuthor() {
+	public Author getAuthor() {
 		return author;
 	}
 
@@ -71,7 +72,7 @@ public class Book implements Serializable {
 		return user;
 	}
 	
-	public void setAuthor(String author) {
+	public void setAuthor(Author author) {
 		this.author = author;
 	}
 	

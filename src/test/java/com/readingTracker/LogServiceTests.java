@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.readingTracker.data.entity.AppUser;
+import com.readingTracker.data.entity.Author;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.Log;
 import com.readingTracker.data.entity.ReadingStatus;
@@ -30,6 +31,7 @@ import com.readingTracker.service.impl.LogServiceImpl;
 @SpringBootTest
 class LogServiceTests {
 	Book book;
+	Author author;
 	AppUser appUser;
 	Log testLog;
 	Log newLog;
@@ -43,8 +45,9 @@ class LogServiceTests {
 	@BeforeEach
 	void setUp() throws Exception {
 		service = new LogServiceImpl(repository);
+		author = new Author(5L, "Walt Whitman");
 		appUser = new AppUser(1L, "Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25));
-		book = new Book(2L, "book title", "book author", "English", 32, new HashSet<>(), appUser);
+		book = new Book(2L, "book title", author, "English", 32, new HashSet<>(), appUser);
 		testLog = new Log(3L, book, ReadingStatus.FINISHED, LocalDate.now().minusMonths(1), LocalDate.now(), appUser);
 	}
 
@@ -54,6 +57,7 @@ class LogServiceTests {
 	@AfterEach
 	void tearDown() throws Exception {
 		book = null;
+		author = null;
 		appUser = null;
 		testLog = null;
 		newLog = null;

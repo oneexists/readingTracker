@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.readingTracker.data.entity.AppUser;
+import com.readingTracker.data.entity.Author;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.repository.BookRepository;
 import com.readingTracker.service.BookService;
@@ -28,6 +29,7 @@ import com.readingTracker.service.impl.BookServiceImpl;
 @SpringBootTest
 class BookServiceTests {
 	AppUser appUser;
+	Author author;
 	Book testBook;
 	Book newBook;
 	
@@ -35,23 +37,19 @@ class BookServiceTests {
 	private BookRepository repository;
 	private BookService service;
 	
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		service = new BookServiceImpl(repository);
 		appUser = new AppUser(1L, "Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25));
+		author = new Author(5L, "Walt Whitman");
 		newBook = new Book();
-		testBook = new Book(2L, "book title", "book author", "English", 32, new HashSet<>(), appUser);
+		testBook = new Book(2L, "book title", author, "English", 32, new HashSet<>(), appUser);
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown() {
 		appUser = null;
+		author = null;
 		testBook = null;
 		newBook = null;
 	}
@@ -92,7 +90,6 @@ class BookServiceTests {
 	void testUpdateBook() {
 		given(repository.findById(testBook.getId())).willReturn(Optional.of(testBook));
 		testBook.setTitle("new title");
-		testBook.setAuthor("different author");
 		service.updateBook(testBook);
 		ArgumentCaptor<Book> updateArgCaptor = ArgumentCaptor.forClass(Book.class);
 		verify(repository).saveAndFlush(updateArgCaptor.capture());
