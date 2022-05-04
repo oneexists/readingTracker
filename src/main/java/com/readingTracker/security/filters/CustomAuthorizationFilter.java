@@ -1,6 +1,7 @@
 package com.readingTracker.security.filters;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,19 +36,21 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		// TODO filter requests to SecurityConstants.PUBLIC_URLS
-		if (request.getServletPath().equals("/books/all") || request.getServletPath().equals("/users/login") || request.getServletPath().equals("/users/token/refresh")) {
+		// filter public endpoints
+		if (Arrays.asList(SecurityConstants.PUBLIC_URLS).contains(request.getServletPath())) {
 			filterChain.doFilter(request, response);
 		} else {
 			String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 			// verify authorization header
 			if (authorizationHeader != null && authorizationHeader.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+				// verify token and client
 				String token = authorizationHeader.substring(SecurityConstants.TOKEN_PREFIX.length());
 				String username = jwtUtil.getSubject(token);
 				try {
 					String[] claims = jwtUtil.getClaims(token);
 					Collection<SimpleGrantedAuthority> authorities = jwtUtil.getAuthorities(claims);
 					SecurityContextHolder.getContext().setAuthentication(jwtUtil.getAuthentication(username, null, authorities));
+					// forward
 					filterChain.doFilter(request, response);
 				} catch (Exception e) {
 					response.setHeader("error", e.getMessage());
