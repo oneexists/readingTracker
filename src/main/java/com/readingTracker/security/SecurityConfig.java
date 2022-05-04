@@ -3,7 +3,6 @@ package com.readingTracker.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,12 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), jwtUtil);
-		
-		customAuthenticationFilter.setFilterProcessesUrl("/users/login");
+		customAuthenticationFilter.setFilterProcessesUrl("/login");
 		http.csrf().disable();
 		// set endpoints
 		http.authorizeRequests().antMatchers(SecurityConstants.PUBLIC_URLS).permitAll();
-		http.authorizeRequests().antMatchers(HttpMethod.POST, "/users/save**").hasAnyAuthority(Authorities.ADMIN_AUTHORITIES);
 		http.authorizeRequests().antMatchers(SecurityConstants.USER_URLS).hasAnyAuthority(Authorities.USER_AUTHORITIES);
 		http.authorizeRequests().antMatchers(SecurityConstants.MANAGER_URLS).hasAnyAuthority(Authorities.MANAGER_AUTHORITIES);
 		http.authorizeRequests().anyRequest().authenticated()
