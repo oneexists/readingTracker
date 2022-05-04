@@ -20,6 +20,7 @@ import com.readingTracker.data.entity.Author;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.Log;
 import com.readingTracker.data.entity.ReadingStatus;
+import com.readingTracker.data.entity.UserRole;
 import com.readingTracker.data.repository.LogRepository;
 import com.readingTracker.service.LogService;
 import com.readingTracker.service.impl.LogServiceImpl;
@@ -35,10 +36,11 @@ class LogServiceTests {
 	AppUser appUser;
 	Log testLog;
 	Log newLog;
-	
+
 	@Mock
 	private LogRepository repository;
 	private LogService service;
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -46,7 +48,7 @@ class LogServiceTests {
 	void setUp() throws Exception {
 		service = new LogServiceImpl(repository);
 		author = new Author(5L, "Walt Whitman");
-		appUser = new AppUser(1L, "Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25));
+		appUser = new AppUser("Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25), UserRole.ROLE_USER);
 		book = new Book(2L, "book title", author, "English", 32, new HashSet<>(), appUser);
 		testLog = new Log(3L, book, ReadingStatus.FINISHED, LocalDate.now().minusMonths(1), LocalDate.now(), appUser);
 	}
@@ -64,7 +66,8 @@ class LogServiceTests {
 	}
 
 	/**
-	 * Test method for {@link com.readingTracker.service.impl.LogServiceImpl#saveLog(com.readingTracker.data.entity.Log)}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.LogServiceImpl#saveLog(com.readingTracker.data.entity.Log)}.
 	 */
 	@Test
 	void testSaveLog() {
@@ -75,7 +78,8 @@ class LogServiceTests {
 	}
 
 	/**
-	 * Test method for {@link com.readingTracker.service.impl.LogServiceImpl#findById(java.lang.Long)}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.LogServiceImpl#findById(java.lang.Long)}.
 	 */
 	@Test
 	void testFindById() {
@@ -84,16 +88,18 @@ class LogServiceTests {
 	}
 
 	/**
-	 * Test method for {@link com.readingTracker.service.impl.LogServiceImpl#getAllLogs()}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.LogServiceImpl#getAllLogs()}.
 	 */
 	@Test
 	void testAllLogs() {
 		service.getAllLogs();
 		verify(repository).findAll();
 	}
-	
+
 	/**
-	 * Test method for {@link com.readingTracker.service.impl.LogServiceImpl#updateLog(com.readingTracker.data.entity.Log)}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.LogServiceImpl#updateLog(com.readingTracker.data.entity.Log)}.
 	 */
 	@Test
 	void testUpdateLog() {
@@ -107,7 +113,8 @@ class LogServiceTests {
 	}
 
 	/**
-	 * Test method for {@link com.readingTracker.service.impl.LogServiceImpl#deleteLog(java.lang.Long)}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.LogServiceImpl#deleteLog(java.lang.Long)}.
 	 */
 	@Test
 	void testDeleteLog() {

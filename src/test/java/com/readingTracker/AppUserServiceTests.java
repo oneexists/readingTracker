@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.readingTracker.data.entity.AppUser;
+import com.readingTracker.data.entity.UserRole;
 import com.readingTracker.data.repository.AppUserRepository;
 import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.impl.AppUserServiceImpl;
@@ -23,13 +24,13 @@ import com.readingTracker.service.impl.AppUserServiceImpl;
 /**
  * @author skylar
  * 
- * Tests for AppUserService
+ *         Tests for AppUserService
  */
 @SpringBootTest
 class AppUserServiceTests {
 	AppUser newAppUser;
 	AppUser testAppUser;
-	
+
 	@Mock
 	private AppUserRepository repository;
 	@Mock
@@ -40,7 +41,8 @@ class AppUserServiceTests {
 	void setUp() throws Exception {
 		service = new AppUserServiceImpl(repository, passwordEncoder);
 		newAppUser = new AppUser();
-		testAppUser = new AppUser(1L, "Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25));
+		testAppUser = new AppUser("Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25),
+				UserRole.ROLE_USER);
 	}
 
 	@AfterEach
@@ -51,7 +53,8 @@ class AppUserServiceTests {
 
 	/**
 	 * Test save new app user <br />
-	 * Test method for {@link com.readingTracker.service.impl.AppUserServiceImpl#saveUser(com.readingTracker.data.entity.AppUser)}
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.AppUserServiceImpl#saveUser(com.readingTracker.data.entity.AppUser)}
 	 */
 	@Test
 	void testSaveUser() {
@@ -63,7 +66,8 @@ class AppUserServiceTests {
 
 	/**
 	 * Test find by app user id <br />
-	 * Test method for {@link com.readingTracker.service.impl.AppUserServiceImpl#getUser(java.lang.Long)}
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.AppUserServiceImpl#getUser(java.lang.Long)}
 	 */
 	@Test
 	void testGetUser() {
@@ -76,7 +80,8 @@ class AppUserServiceTests {
 
 	/**
 	 * Test get all app users <br />
-	 * Test method for {@link com.readingTracker.service.impl.AppUserServiceImpl#getAllUsers()}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.AppUserServiceImpl#getAllUsers()}.
 	 */
 	@Test
 	void testGetAllUsers() {
@@ -86,7 +91,8 @@ class AppUserServiceTests {
 
 	/**
 	 * Test update app user <br />
-	 * Test method for {@link com.readingTracker.service.impl.AppUserServiceImpl#updateUser(com.readingTracker.data.entity.AppUser)}
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.AppUserServiceImpl#updateUser(com.readingTracker.data.entity.AppUser)}
 	 */
 	@Test
 	void testUpdateUser() {
@@ -100,7 +106,8 @@ class AppUserServiceTests {
 
 	/**
 	 * Test delete app user <br />
-	 * Test method for {@link com.readingTracker.service.impl.AppUserServiceImpl#delete(java.lang.Long)}
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.AppUserServiceImpl#delete(java.lang.Long)}
 	 */
 	@Test
 	void testDelete() {

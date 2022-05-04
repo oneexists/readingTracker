@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.entity.Author;
 import com.readingTracker.data.entity.Book;
+import com.readingTracker.data.entity.UserRole;
 import com.readingTracker.data.repository.BookRepository;
 import com.readingTracker.service.BookService;
 import com.readingTracker.service.impl.BookServiceImpl;
@@ -32,15 +33,15 @@ class BookServiceTests {
 	Author author;
 	Book testBook;
 	Book newBook;
-	
+
 	@Mock
 	private BookRepository repository;
 	private BookService service;
-	
+
 	@BeforeEach
 	void setUp() {
 		service = new BookServiceImpl(repository);
-		appUser = new AppUser(1L, "Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25));
+		appUser = new AppUser("Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25), UserRole.ROLE_USER);
 		author = new Author(5L, "Walt Whitman");
 		newBook = new Book();
 		testBook = new Book(2L, "book title", author, "English", 32, new HashSet<>(), appUser);
@@ -55,7 +56,8 @@ class BookServiceTests {
 	}
 
 	/**
-	 * Test method for {@link com.readingTracker.service.impl.BookServiceImpl#saveBook(com.readingTracker.data.entity.Book)}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.BookServiceImpl#saveBook(com.readingTracker.data.entity.Book)}.
 	 */
 	@Test
 	void testSaveBook() {
@@ -66,7 +68,8 @@ class BookServiceTests {
 	}
 
 	/**
-	 * Test method for {@link com.readingTracker.service.impl.BookServiceImpl#findById(java.lang.Long)}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.BookServiceImpl#findById(java.lang.Long)}.
 	 */
 	@Test
 	void testFindById() {
@@ -75,16 +78,18 @@ class BookServiceTests {
 	}
 
 	/**
-	 * Test method for {@link com.readingTracker.service.impl.BookServiceImpl#getAllBooks()}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.BookServiceImpl#getAllBooks()}.
 	 */
 	@Test
 	void testAllBooks() {
 		service.getAllBooks();
 		verify(repository).findAll();
 	}
-	
+
 	/**
-	 * Test method for {@link com.readingTracker.service.impl.BookServiceImpl#updateBook(com.readingTracker.data.entity.Book)}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.BookServiceImpl#updateBook(com.readingTracker.data.entity.Book)}.
 	 */
 	@Test
 	void testUpdateBook() {
@@ -95,9 +100,10 @@ class BookServiceTests {
 		verify(repository).saveAndFlush(updateArgCaptor.capture());
 		assertThat(updateArgCaptor.getValue()).isEqualTo(testBook);
 	}
-	
+
 	/**
-	 * Test method for {@link com.readingTracker.service.impl.BookServiceImpl#deleteBook(java.lang.Long)}.
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.BookServiceImpl#deleteBook(java.lang.Long)}.
 	 */
 	@Test
 	void testDeleteBook() {

@@ -13,18 +13,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.readingTracker.data.entity.AppUser;
+import com.readingTracker.data.entity.UserRole;
 import com.readingTracker.service.AppUserService;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 
 @SpringBootApplication
 @EnableEncryptableProperties
 public class ReadingTrackerApplication {
-	
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean("jasyptStringEncryptor")
 	StringEncryptor stringEncryptor() {
 		PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
@@ -40,15 +41,15 @@ public class ReadingTrackerApplication {
 		encryptor.setConfig(config);
 		return encryptor;
 	}
-	
+
 	@Bean
 	CommandLineRunner run(AppUserService appUserService) {
 		return args -> {
-			AppUser appUser = new AppUser("user", "pass", LocalDate.now().minusYears(27), "Admin");
-			appUserService.saveUser(appUser);
+			appUserService
+					.saveUser(new AppUser("Jesse", "user", "pass", LocalDate.now().minusYears(27), UserRole.ROLE_USER));
 		};
 	}
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(ReadingTrackerApplication.class, args);
 	}
