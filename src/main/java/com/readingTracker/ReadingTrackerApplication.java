@@ -2,6 +2,9 @@ package com.readingTracker;
 
 import java.time.LocalDate;
 
+import org.jasypt.encryption.StringEncryptor;
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +23,22 @@ public class ReadingTrackerApplication {
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean("jasyptStringEncryptor")
+	StringEncryptor stringEncryptor() {
+		PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+		SimpleStringPBEConfig config = new SimpleStringPBEConfig();
+		config.setPassword("pypy");
+		config.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
+		config.setKeyObtentionIterations("1000");
+		config.setPoolSize("1");
+		config.setProviderName("SunJCE");
+		config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
+		config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator");
+		config.setStringOutputType("base64");
+		encryptor.setConfig(config);
+		return encryptor;
 	}
 	
 	@Bean
