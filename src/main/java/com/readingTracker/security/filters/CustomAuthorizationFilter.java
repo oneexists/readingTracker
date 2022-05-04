@@ -3,8 +3,6 @@ package com.readingTracker.security.filters;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,15 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.readingTracker.security.JwtUtil;
 import com.readingTracker.security.SecurityConstants;
+import com.readingTracker.service.exceptions.InvalidTokenException;
 
 @Component
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
@@ -53,12 +49,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 					// forward
 					filterChain.doFilter(request, response);
 				} catch (Exception e) {
-					response.setHeader("error", e.getMessage());
-					response.setStatus(HttpStatus.FORBIDDEN.value());
-					Map<String, String> error = new HashMap<>();
-					error.put("error_message", e.getMessage());
-					response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-					new ObjectMapper().writeValue(response.getOutputStream(), error);
+					throw new InvalidTokenException(response, e);
 				}
 			} else {
 				filterChain.doFilter(request, response);
