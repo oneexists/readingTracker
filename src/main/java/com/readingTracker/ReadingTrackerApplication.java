@@ -13,8 +13,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.readingTracker.data.entity.AppUser;
+import com.readingTracker.data.entity.Author;
+import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.UserRole;
 import com.readingTracker.service.AppUserService;
+import com.readingTracker.service.AuthorService;
+import com.readingTracker.service.BookService;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 
 @SpringBootApplication
@@ -43,10 +47,13 @@ public class ReadingTrackerApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(AppUserService appUserService) {
+	CommandLineRunner run(AppUserService appUserService, AuthorService authorService, BookService bookService) {
 		return args -> {
 			appUserService
 					.saveUser(new AppUser("Jesse", "user", "pass", LocalDate.now().minusYears(27), UserRole.ROLE_USER));
+			authorService.saveAuthor(new Author("Oscar Wilde"));
+			bookService.saveBook(new Book("The Picture of Dorian Gray", authorService.getAllAuthors().get(0), "EN", 254,
+					appUserService.findByUsername("user").get()));
 		};
 	}
 
