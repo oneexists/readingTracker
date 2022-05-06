@@ -13,7 +13,8 @@ import javax.persistence.OneToMany;
 @Entity
 public class Book implements Serializable {
 	private static final long serialVersionUID = 202204001L;
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	private Long id;
 	private String title;
 	@ManyToOne
@@ -24,12 +25,21 @@ public class Book implements Serializable {
 	private Set<Log> logs = new HashSet<>();
 	@ManyToOne
 	private AppUser user;
-	
+
 	public Book() {
 		super();
 	}
-	
+
 	public Book(AppUser user) {
+		this.user = user;
+	}
+
+	public Book(String title, Author author, String language, int pages, AppUser user) {
+		super();
+		this.title = title;
+		this.author = author;
+		this.language = language;
+		this.pages = pages;
 		this.user = user;
 	}
 
@@ -55,35 +65,35 @@ public class Book implements Serializable {
 	public String getLanguage() {
 		return language;
 	}
-	
+
 	public Set<Log> getLogs() {
 		return logs;
 	}
-	
+
 	public int getPages() {
 		return pages;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
-	
+
 	public AppUser getUser() {
 		return user;
 	}
-	
+
 	public void setAuthor(Author author) {
 		this.author = author;
 	}
-	
+
 	public void setLanguage(String language) {
 		this.language = language;
 	}
-	
+
 	public void setLogs(Set<Log> logs) {
 		this.logs = logs;
 	}
-	
+
 	public void setPages(int pages) {
 		this.pages = pages;
 	}
@@ -101,5 +111,5 @@ public class Book implements Serializable {
 		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", language=" + language + ", pages="
 				+ pages + ", logs=" + logs + ", user=" + user.getName() + "]";
 	}
-	
+
 }
