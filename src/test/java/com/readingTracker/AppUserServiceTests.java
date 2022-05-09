@@ -20,6 +20,7 @@ import com.readingTracker.data.entity.UserRole;
 import com.readingTracker.data.repository.AppUserRepository;
 import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.impl.AppUserServiceImpl;
+import com.readingTracker.web.dto.AppUserRegistrationDto;
 
 /**
  * @author skylar
@@ -30,6 +31,7 @@ import com.readingTracker.service.impl.AppUserServiceImpl;
 class AppUserServiceTests {
 	AppUser newAppUser;
 	AppUser testAppUser;
+	AppUserRegistrationDto appUserDto;
 
 	@Mock
 	private AppUserRepository repository;
@@ -43,12 +45,15 @@ class AppUserServiceTests {
 		newAppUser = new AppUser();
 		testAppUser = new AppUser("Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25),
 				UserRole.ROLE_USER);
+		appUserDto = new AppUserRegistrationDto("Mike", "security", "newpass",
+				LocalDate.now().minusYears(40).toString());
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		newAppUser = null;
 		testAppUser = null;
+		appUserDto = null;
 	}
 
 	/**
@@ -102,6 +107,22 @@ class AppUserServiceTests {
 		ArgumentCaptor<AppUser> updateArgCaptor = ArgumentCaptor.forClass(AppUser.class);
 		verify(repository).saveAndFlush(updateArgCaptor.capture());
 		assertThat(updateArgCaptor.getValue()).isEqualTo(testAppUser);
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.readingTracker.service.impl.AppUserServiceImpl#registerUser(com.readingTracker.web.dto.AppUserRegistrationDto)}.
+	 */
+	@Test
+	void testRegisterUser() {
+		service.registerUser(appUserDto);
+		ArgumentCaptor<AppUser> registerArgCaptor = ArgumentCaptor.forClass(AppUser.class);
+		verify(repository).save(registerArgCaptor.capture());
+		assertThat(registerArgCaptor.getValue().getName()).isEqualTo(appUserDto.getName());
+		assertThat(registerArgCaptor.getValue().getDateOfBirth()).isEqualTo(appUserDto.getDateOfBirth());
+		assertThat(registerArgCaptor.getValue().getUsername()).isEqualTo(appUserDto.getUsername());
+		assertThat(registerArgCaptor.getValue().getPassword()).isNotEqualTo(appUserDto.getPassword());
+		assertThat(registerArgCaptor.getValue().getUserRole()).isEqualTo(UserRole.ROLE_USER);
 	}
 
 	/**
