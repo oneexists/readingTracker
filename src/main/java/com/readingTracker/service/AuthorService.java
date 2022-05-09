@@ -14,4 +14,6 @@ public interface AuthorService {
 	void deleteAuthor(Long id);
 
 	Author saveAuthor(Author author);
+
+	Author findByName(String name);
 }

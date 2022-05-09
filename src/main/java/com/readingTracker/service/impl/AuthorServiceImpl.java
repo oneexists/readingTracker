@@ -37,6 +37,11 @@ public class AuthorServiceImpl implements AuthorService {
 	}
 
 	@Override
+	public Author findByName(String name) {
+		return repository.findByName(name);
+	}
+
+	@Override
 	public Author updateAuthor(Author author) {
 		return repository.findById(author.getId()).map(updateAuthor -> {
 			updateAuthor.setName(author.getName());
