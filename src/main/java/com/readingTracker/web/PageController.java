@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.readingTracker.data.entity.Author;
+import com.readingTracker.service.AuthorService;
 import com.readingTracker.service.BookService;
+import com.readingTracker.web.domain.BookConverter;
 import com.readingTracker.web.dto.AppUserRegistrationDto;
 import com.readingTracker.web.dto.BookDTO;
 
@@ -24,11 +27,16 @@ public class PageController {
 	private final String LOGIN_PAGE = "login";
 	private final String ADD_LOG_PAGE = "add-log";
 	private final String VIEW_BOOK_PAGE = "view-book";
+
 	private final BookService bookService;
+	private final AuthorService authorService;
+	private final BookConverter bookConverter;
 
 	@Autowired
-	public PageController(BookService bookService) {
+	public PageController(BookService bookService, AuthorService authorService, BookConverter bookConverter) {
 		this.bookService = bookService;
+		this.authorService = authorService;
+		this.bookConverter = bookConverter;
 	}
 
 	@GetMapping("/user/login")
@@ -73,7 +81,10 @@ public class PageController {
 		if (result.hasErrors()) {
 			return ADD_PAGE;
 		}
-		// TODO save bookDTO
+		if (authorService.findByName(bookDTO.getAuthor()) == null) {
+			authorService.saveAuthor(new Author(bookDTO.getAuthor()));
+		}
+		bookService.saveBook(bookConverter.clientToBook(bookDTO));
 		return home(model);
 	}
 

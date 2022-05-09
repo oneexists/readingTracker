@@ -43,6 +43,15 @@ public class Book implements Serializable {
 		this.user = user;
 	}
 
+	public Book(Long id, String title, Author author, String language, int pages) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.author = author;
+		this.language = language;
+		this.pages = pages;
+	}
+
 	public Book(Long id, String title, Author author, String language, int pages, Set<Log> logs, AppUser user) {
 		super();
 		this.id = id;
