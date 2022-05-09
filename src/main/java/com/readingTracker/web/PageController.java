@@ -23,6 +23,7 @@ public class PageController {
 	private final String EDIT_PAGE = "edit-book";
 	private final String LOGIN_PAGE = "login";
 	private final String ADD_LOG_PAGE = "add-log";
+	private final String VIEW_BOOK_PAGE = "view-book";
 	private final BookService bookService;
 
 	@Autowired
@@ -68,5 +69,11 @@ public class PageController {
 		}
 		// TODO save bookDTO
 		return home(model);
+	}
+
+	@GetMapping("/view/{id}")
+	public String viewBook(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("book", bookService.findById(id));
+		return VIEW_BOOK_PAGE;
 	}
 }
