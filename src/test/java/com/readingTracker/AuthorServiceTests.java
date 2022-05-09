@@ -65,6 +65,18 @@ class AuthorServiceTests {
 
 	/**
 	 * Test method for
+	 * {@link com.readingTracker.service.impl.AuthorServiceImpl#findByName(java.lang.String)}.
+	 */
+	@Test
+	void testFindByName() {
+		service.findByName("name");
+		ArgumentCaptor<String> nameArgCaptor = ArgumentCaptor.forClass(String.class);
+		verify(repository).findByName(nameArgCaptor.capture());
+		assertThat(nameArgCaptor.getValue()).isEqualTo("name");
+	}
+
+	/**
+	 * Test method for
 	 * {@link com.readingTracker.service.impl.AuthorServiceImpl#getAllAuthors()}.
 	 */
 	@Test
