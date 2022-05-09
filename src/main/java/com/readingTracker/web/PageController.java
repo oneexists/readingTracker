@@ -43,6 +43,12 @@ public class PageController {
 		return INDEX_PAGE;
 	}
 
+	@GetMapping("/addBook")
+	public String addBook(Model model) {
+		model.addAttribute("book", new BookDTO());
+		return ADD_PAGE;
+	}
+
 	@GetMapping("addLog/{id}")
 	public String addLog(@PathVariable("id") Long id, Model model) throws NotFoundException {
 		model.addAttribute("book", bookService.findById(id));
