@@ -12,19 +12,29 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Log implements Serializable {
 	private static final long serialVersionUID = 202204001L;
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	private Long id;
 	@ManyToOne
-	@JoinColumn(name="logs")
+	@JoinColumn(name = "logs")
 	private Book book;
 	private ReadingStatus status;
 	private LocalDate start;
 	private LocalDate finish;
 	@ManyToOne
 	private AppUser user;
-	
+
 	public Log() {
 		super();
+	}
+
+	public Log(Book book, ReadingStatus status, LocalDate start, LocalDate finish, AppUser user) {
+		super();
+		this.book = book;
+		this.status = status;
+		this.start = start;
+		this.finish = finish;
+		this.user = user;
 	}
 
 	public Log(Long id, Book book, ReadingStatus status, LocalDate start, LocalDate finish, AppUser user) {
@@ -83,9 +93,8 @@ public class Log implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Log [id=" + id + ", book=" + book.getTitle() + ", status=" + status + ", start=" + start + ", finish=" + finish
-				+ ", user=" + user.getName() + "]";
+		return "Log [id=" + id + ", book=" + book.getTitle() + ", status=" + status + ", start=" + start + ", finish="
+				+ finish + ", user=" + user.getName() + "]";
 	}
-
 
 }

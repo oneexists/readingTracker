@@ -15,13 +15,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.entity.Author;
 import com.readingTracker.data.entity.Book;
+import com.readingTracker.data.entity.Log;
+import com.readingTracker.data.entity.ReadingStatus;
+import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.AuthorService;
 import com.readingTracker.service.BookService;
+import com.readingTracker.service.LogService;
+import com.readingTracker.service.exceptions.AppUserNotFoundException;
 import com.readingTracker.web.domain.BookConverter;
 import com.readingTracker.web.dto.AppUserRegistrationDto;
-import com.readingTracker.web.dto.BookDTO;
+import com.readingTracker.web.dto.BookDto;
 
 @Controller
 public class PageController {
@@ -34,12 +40,17 @@ public class PageController {
 
 	private final BookService bookService;
 	private final AuthorService authorService;
+	private final LogService logService;
+	private final AppUserService appUserService;
 	private final BookConverter bookConverter;
 
 	@Autowired
-	public PageController(BookService bookService, AuthorService authorService, BookConverter bookConverter) {
+	public PageController(BookService bookService, AuthorService authorService, LogService logService,
+			AppUserService appUserService, BookConverter bookConverter) {
 		this.bookService = bookService;
 		this.authorService = authorService;
+		this.logService = logService;
+		this.appUserService = appUserService;
 		this.bookConverter = bookConverter;
 	}
 
@@ -57,7 +68,7 @@ public class PageController {
 
 	@GetMapping("/addBook")
 	public String addBook(Authentication authentication, Model model) {
-		model.addAttribute("book", new BookDTO(authentication.getName()));
+		model.addAttribute("book", new BookDto(authentication.getName()));
 		return ADD_PAGE;
 	}
 
@@ -65,7 +76,7 @@ public class PageController {
 	public String addLog(@PathVariable("id") Long id, Authentication authentication, Model model)
 			throws NotFoundException {
 		Book book = bookService.findById(id);
-		BookDTO bookDTO = bookConverter.bookToClient(book);
+		BookDto bookDTO = bookConverter.bookToClient(book);
 		bookDTO.setStart(LocalDate.now());
 		model.addAttribute("book", bookDTO);
 		return ADD_LOG_PAGE;
@@ -85,7 +96,7 @@ public class PageController {
 	}
 
 	@PostMapping("save")
-	public String save(@Valid @ModelAttribute("book") final BookDTO bookDTO, Authentication authentication,
+	public String save(@Valid @ModelAttribute("book") final BookDto bookDTO, Authentication authentication,
 			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return ADD_PAGE;
@@ -94,6 +105,12 @@ public class PageController {
 			authorService.saveAuthor(new Author(bookDTO.getAuthor()));
 		}
 		bookService.saveBook(bookConverter.clientToBook(bookDTO));
+		if (bookDTO.getStart() != null && bookDTO.getFinish() != null) {
+			Book book = bookService.findById(bookDTO.getId());
+			AppUser user = appUserService.findByUsername(authentication.getName())
+					.orElseThrow(() -> new AppUserNotFoundException(authentication.getName()));
+			logService.saveLog(new Log(book, ReadingStatus.FINISHED, bookDTO.getStart(), bookDTO.getFinish(), user));
+		}
 		return home(authentication, model);
 	}
 
