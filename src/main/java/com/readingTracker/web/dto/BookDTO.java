@@ -18,22 +18,28 @@ public class BookDTO {
 	private LocalDate start;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate finish;
+	private String username;
 
 	public BookDTO() {
 		super();
 	}
 
-	public BookDTO(Long id, String title, String author, String language, int pages) {
+	public BookDTO(String username) {
+		this.username = username;
+	}
+
+	public BookDTO(Long id, String title, String author, String language, int pages, String username) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.language = language;
 		this.pages = pages;
+		this.username = username;
 	}
 
-	public BookDTO(Long id, String title, String author, String language, int pages, LocalDate start,
-			LocalDate finish) {
+	public BookDTO(Long id, String title, String author, String language, int pages, LocalDate start, LocalDate finish,
+			String username) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -42,6 +48,7 @@ public class BookDTO {
 		this.pages = pages;
 		this.start = start;
 		this.finish = finish;
+		this.username = username;
 	}
 
 	public Long getId() {
@@ -99,4 +106,13 @@ public class BookDTO {
 	public void setFinish(LocalDate finish) {
 		this.finish = finish;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 }

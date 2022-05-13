@@ -26,6 +26,7 @@
 	<div class="row">
 		<h1>Update Book</h1>
 		<form th:action="@{/save}" th:object="${book}" method="post">
+		<input type="hidden" th:field="*{username}" id="username">
 		<input type="hidden" th:field="*{id}" id="id">
 		<table class="table">
 			<tr>
@@ -34,7 +35,7 @@
 			</tr>
 			<tr>
 				<td>Author:</td>
-				<td><input type="text" th:field="*{author.name}" id="author" placeholder="Author" /> <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span></td>
+				<td><input type="text" th:field="*{author}" id="author" placeholder="Author" /> <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span></td>
 			</tr>
 			<tr>
 				<td>Language:</td>

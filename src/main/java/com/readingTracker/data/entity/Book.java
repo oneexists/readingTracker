@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Book implements Serializable {
-	private static final long serialVersionUID = 202204001L;
+	private static final long serialVersionUID = 202205002L;
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -43,13 +43,14 @@ public class Book implements Serializable {
 		this.user = user;
 	}
 
-	public Book(Long id, String title, Author author, String language, int pages) {
+	public Book(Long id, String title, Author author, String language, int pages, AppUser user) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.language = language;
 		this.pages = pages;
+		this.user = user;
 	}
 
 	public Book(Long id, String title, Author author, String language, int pages, Set<Log> logs, AppUser user) {
