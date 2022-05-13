@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.AuthorService;
-import com.readingTracker.web.dto.BookDTO;
+import com.readingTracker.web.dto.BookDto;
 
 @Component
 public class BookConverter {
@@ -19,12 +19,12 @@ public class BookConverter {
 		this.appUserService = appUserService;
 	}
 
-	public BookDTO bookToClient(Book book) {
-		return new BookDTO(book.getId(), book.getTitle(), book.getAuthor().getName(), book.getLanguage(),
+	public BookDto bookToClient(Book book) {
+		return new BookDto(book.getId(), book.getTitle(), book.getAuthor().getName(), book.getLanguage(),
 				book.getPages(), book.getUser().getUsername());
 	}
 
-	public Book clientToBook(BookDTO bookDTO) {
+	public Book clientToBook(BookDto bookDTO) {
 		return new Book(bookDTO.getId(), bookDTO.getTitle(), authorService.findByName(bookDTO.getAuthor()),
 				bookDTO.getLanguage(), bookDTO.getPages(), appUserService.findByUsername(bookDTO.getUsername()).get());
 	}

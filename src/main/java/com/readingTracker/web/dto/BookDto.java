@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class BookDTO {
+public class BookDto {
 	private Long id;
 	@NotBlank(message = "Title cannot be empty.")
 	private String title;
@@ -20,15 +20,15 @@ public class BookDTO {
 	private LocalDate finish;
 	private String username;
 
-	public BookDTO() {
+	public BookDto() {
 		super();
 	}
 
-	public BookDTO(String username) {
+	public BookDto(String username) {
 		this.username = username;
 	}
 
-	public BookDTO(Long id, String title, String author, String language, int pages, String username) {
+	public BookDto(Long id, String title, String author, String language, int pages, String username) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -38,7 +38,7 @@ public class BookDTO {
 		this.username = username;
 	}
 
-	public BookDTO(Long id, String title, String author, String language, int pages, LocalDate start, LocalDate finish,
+	public BookDto(Long id, String title, String author, String language, int pages, LocalDate start, LocalDate finish,
 			String username) {
 		super();
 		this.id = id;
