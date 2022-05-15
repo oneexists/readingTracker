@@ -7,7 +7,6 @@ import com.readingTracker.data.entity.Book;
 import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.AuthorService;
 import com.readingTracker.web.dto.BookDto;
-import com.readingTracker.web.dto.BookModel;
 
 @Component
 public class BookConverter {
@@ -30,8 +29,4 @@ public class BookConverter {
 				bookDTO.getLanguage(), bookDTO.getPages(), appUserService.findByUsername(bookDTO.getUsername()).get());
 	}
 
-	public BookModel bookToModel(Book book) {
-		return new BookModel(book.getId(), book.getTitle(), book.getAuthor().getName(), book.getLanguage(),
-				book.getPages(), book.getUser().getUsername());
-	}
 }
