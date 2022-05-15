@@ -3,6 +3,7 @@ package com.readingTracker.web.dto;
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,8 +16,10 @@ public class BookDto {
 	private String language;
 	private int pages;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@PastOrPresent
 	private LocalDate start;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@PastOrPresent
 	private LocalDate finish;
 	private String username;
 
