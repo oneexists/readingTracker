@@ -39,7 +39,8 @@ configurations to serve both login functionalities simultaneously.
 
   ![Login / Logout Page](https://github.com/oneexists/readingTracker/blob/main/img/login_logout_page.png)
 
-- Hypermedia REST API integrated through Spring Data REST
+- Hypermedia driven RESTful API provides information dynamically with link relations to
+facilitate interaction
 
   [Spring Data REST Reference Guide](https://docs.spring.io/spring-data/rest/docs/current/reference/html/)
 
