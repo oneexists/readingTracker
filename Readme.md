@@ -4,9 +4,23 @@ Provides a hypermedia RESTful API and web interface to create a digital bookshel
 Keep track of the books your bookshelf and the books you've read by adding books and reading
 logs to record the start and finish dates.
 
+Sign in and view your bookshelf:
+
+![Homepage](https://github.com/oneexists/readingTracker/blob/main/img/homepage.png)
+
+Add books:
+
+![Add Book Page](https://github.com/oneexists/readingTracker/blob/main/img/add_book.png)
+
+View and edit book details:
+
+![View Book Page](https://github.com/oneexists/readingTracker/blob/main/img/view_book.png)
+
+![Edit Book Page](https://github.com/oneexists/readingTracker/blob/main/img/edit_book.png)
+
 # Process Analysis
 
-- Initial securitly configuration provided by JWT web tokens were implemented utilizing the
+- Initial security configuration provided by JWT web tokens were implemented utilizing the
 Intercepting Filter Pattern to allow for the definition of custom authentication and
 authorization filters to manage requests to the API.
 
