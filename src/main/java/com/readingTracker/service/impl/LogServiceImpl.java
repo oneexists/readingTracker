@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.readingTracker.data.entity.AppUser;
+import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.Log;
 import com.readingTracker.data.repository.LogRepository;
 import com.readingTracker.service.AppUserService;
@@ -64,5 +65,10 @@ public class LogServiceImpl implements LogService {
 	@Override
 	public void deleteLog(Long id) {
 		repository.deleteById(id);
+	}
+
+	@Override
+	public List<Log> findByBook(Book book) {
+		return repository.findByBook(book);
 	}
 }

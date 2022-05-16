@@ -2,6 +2,7 @@ package com.readingTracker.service;
 
 import java.util.List;
 
+import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.Log;
 
 public interface LogService {
@@ -16,4 +17,6 @@ public interface LogService {
 	void deleteLog(Long id);
 
 	List<Log> findByUsername(String username);
+
+	List<Log> findByBook(Book book);
 }

@@ -91,8 +91,7 @@ public class PageController {
 	@GetMapping("/deleteBook/{id}")
 	public String deleteBook(@PathVariable("id") Long id, Authentication authentication, Model model) {
 		bookService.deleteBook(id);
-		model.addAttribute("books", bookService.getAllBooks());
-		return home(authentication, model);
+		return "redirect:/";
 	}
 
 	@PostMapping("save")
@@ -111,12 +110,14 @@ public class PageController {
 					.orElseThrow(() -> new AppUserNotFoundException(authentication.getName()));
 			logService.saveLog(new Log(book, ReadingStatus.FINISHED, bookDTO.getStart(), bookDTO.getFinish(), user));
 		}
-		return home(authentication, model);
+		return "redirect:/";
 	}
 
 	@GetMapping("/view/{id}")
 	public String viewBook(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("book", bookService.findById(id));
+		Book book = bookService.findById(id);
+		model.addAttribute("book", book);
+		model.addAttribute("logs", logService.findByBook(book));
 		return VIEW_BOOK_PAGE;
 	}
 }
