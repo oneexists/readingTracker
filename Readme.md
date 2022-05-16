@@ -54,7 +54,12 @@ facilitate interaction
 
 # Functional Requirements
 
+- RESTful API with JWT web token authorization
+
+- Security integration of web interface with login and user registration
+
 - Create, view, update, and delete books
+
 - Create reading logs
 
 # Non-Functional Requirements
@@ -62,9 +67,13 @@ facilitate interaction
 - Look and Feel: improve front-end development skills by learning new technologies to
 improve UI/UX of web interface
 
-- Usability: provide both RESTful API for extension and integrated front-end interface
+- Usability:
+    - provide hypermedia driven RESTful API
+    - Thymeleaf/Bootstrap front-end interface
 
-- Security: integrate security configuration with custom login and registration forms
+- Security:
+    - endpoint security of RESTful API using JWT web tokens
+    - web interface access using custom login and registration forms
 
 # Resources
 
