@@ -22,12 +22,14 @@ configurations to serve both login functionalities simultaneously.
   [Spring Security Reference - Multiple HttpSecurity](https://docs.spring.io/spring-security/site/docs/5.4.2/reference/html5/#multiple-httpsecurity)
 
   ![Registration Page](https://github.com/oneexists/readingTracker/blob/main/img/registration.png)
-  
+
   ![Login / Logout Page](https://github.com/oneexists/readingTracker/blob/main/img/login_logout_page.png)
 
-- Hypermedia REST API integrated through leaveraging Spring Data REST
+- Hypermedia REST API integrated through Spring Data REST
 
   [Spring Data REST Reference Guide](https://docs.spring.io/spring-data/rest/docs/current/reference/html/)
+
+  ![RESTful API](https://github.com/oneexists/readingTracker/blob/main/img/restful_api.png)
 
 # Target Process
 
