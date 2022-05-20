@@ -18,6 +18,10 @@ View and edit book details:
 
 ![Edit Book Page](https://github.com/oneexists/readingTracker/blob/main/img/edit_book.png)
 
+# Domain Model
+
+![Reading Tracker Domain Model](https://github.com/oneexists/readingTracker/blob/main/img/reading_tracker_domain.png)
+
 # Process Analysis
 
 - Initial security configuration provided by JWT web tokens were implemented utilizing the
