@@ -21,8 +21,6 @@ public class Log implements Serializable {
 	private ReadingStatus status;
 	private LocalDate start;
 	private LocalDate finish;
-	@ManyToOne
-	private AppUser user;
 
 	public Log() {
 		super();
@@ -34,7 +32,6 @@ public class Log implements Serializable {
 		this.status = status;
 		this.start = start;
 		this.finish = finish;
-		this.user = user;
 	}
 
 	public Log(Long id, Book book, ReadingStatus status, LocalDate start, LocalDate finish, AppUser user) {
@@ -44,7 +41,6 @@ public class Log implements Serializable {
 		this.status = status;
 		this.start = start;
 		this.finish = finish;
-		this.user = user;
 	}
 
 	public Book getBook() {
@@ -67,10 +63,6 @@ public class Log implements Serializable {
 		return status;
 	}
 
-	public AppUser getUser() {
-		return user;
-	}
-
 	public void setBook(Book book) {
 		this.book = book;
 	}
@@ -87,14 +79,10 @@ public class Log implements Serializable {
 		this.status = status;
 	}
 
-	public void setUser(AppUser user) {
-		this.user = user;
-	}
-
 	@Override
 	public String toString() {
 		return "Log [id=" + id + ", book=" + book.getTitle() + ", status=" + status + ", start=" + start + ", finish="
-				+ finish + ", user=" + user.getName() + "]";
+				+ finish + "]";
 	}
 
 }

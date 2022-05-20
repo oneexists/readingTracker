@@ -23,6 +23,7 @@ import com.readingTracker.data.entity.ReadingStatus;
 import com.readingTracker.data.entity.UserRole;
 import com.readingTracker.data.repository.LogRepository;
 import com.readingTracker.service.AppUserService;
+import com.readingTracker.service.BookService;
 import com.readingTracker.service.LogService;
 import com.readingTracker.service.impl.LogServiceImpl;
 
@@ -42,6 +43,8 @@ class LogServiceTests {
 	private LogRepository repository;
 	@Mock
 	private AppUserService appUserService;
+	@Mock
+	private BookService bookService;
 	private LogService service;
 
 	/**
@@ -49,7 +52,7 @@ class LogServiceTests {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		service = new LogServiceImpl(repository, appUserService);
+		service = new LogServiceImpl(repository, appUserService, bookService);
 		author = new Author(5L, "Walt Whitman");
 		appUser = new AppUser("Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25), UserRole.ROLE_USER);
 		book = new Book(2L, "book title", author, "English", 32, new HashSet<>(), appUser);

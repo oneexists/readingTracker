@@ -36,8 +36,6 @@ public class AppUser implements Serializable {
 	private UserRole userRole;
 	@OneToMany(mappedBy = "user")
 	private Set<Book> books = new HashSet<>();
-	@OneToMany(mappedBy = "user")
-	private Set<Log> logs = new HashSet<>();
 
 	public AppUser() {
 		super();
