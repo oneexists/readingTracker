@@ -19,4 +19,6 @@ public interface LogService {
 	List<Log> findByUsername(String username);
 
 	List<Log> findByBook(Book book);
+
+	void deleteByBookId(Long id);
 }

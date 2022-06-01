@@ -77,4 +77,9 @@ public class LogServiceImpl implements LogService {
 	public List<Log> findByBook(Book book) {
 		return repository.findByBook(book);
 	}
+
+	@Override
+	public void deleteByBookId(Long id) {
+		findByBook(bookService.findById(id)).forEach(log -> deleteLog(log.getId()));
+	}
 }

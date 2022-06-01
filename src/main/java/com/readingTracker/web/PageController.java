@@ -90,6 +90,7 @@ public class PageController {
 
 	@GetMapping("/deleteBook/{id}")
 	public String deleteBook(@PathVariable("id") Long id, Authentication authentication, Model model) {
+		logService.deleteByBookId(id);
 		bookService.deleteBook(id);
 		return "redirect:/";
 	}
