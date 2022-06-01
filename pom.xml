@@ -14,7 +14,7 @@
 	<name>ReadingTracker</name>
 	<description>Reading Tracker Application</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -75,10 +75,6 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.18.3</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.hateoas</groupId>
-			<artifactId>spring-hateoas</artifactId>
-		</dependency>
 	</dependencies>
 
 	<repositories>
@@ -112,11 +108,14 @@
                     <target>10</target>
                 </configuration>
             </plugin>
+			<!--
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			-->
 		</plugins>
 	</build>
 
+	<packaging>war</packaging>
 </project>
