@@ -1,6 +1,9 @@
 package com.readingTracker.web;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -62,7 +65,11 @@ public class PageController {
 
 	@GetMapping("/")
 	public String home(Authentication authentication, Model model) {
+		Map<String, List<Log>> logMap = logService.findByUsername(authentication.getName()).stream()
+				.collect(Collectors.groupingBy(l -> l.getBook().getLanguage()));
+		System.out.println(logMap.toString());
 		model.addAttribute("books", bookService.findByUsername(authentication.getName()));
+		model.addAttribute("languages", logMap);
 		return INDEX_PAGE;
 	}
 
