@@ -67,9 +67,14 @@ public class PageController {
 	public String home(Authentication authentication, Model model) {
 		Map<String, List<Log>> logMap = logService.findByUsername(authentication.getName()).stream()
 				.collect(Collectors.groupingBy(l -> l.getBook().getLanguage()));
-		System.out.println(logMap.toString());
+		int totalBooks = logMap.values().stream().mapToInt(List::size).sum();
+		int totalPages = logMap.values().stream().collect(Collectors
+				.summingInt(list -> list.stream().collect(Collectors.summingInt(log -> log.getBook().getPages()))));
+
 		model.addAttribute("books", bookService.findByUsername(authentication.getName()));
 		model.addAttribute("languages", logMap);
+		model.addAttribute("totalBooks", totalBooks);
+		model.addAttribute("totalPages", totalPages);
 		return INDEX_PAGE;
 	}
 

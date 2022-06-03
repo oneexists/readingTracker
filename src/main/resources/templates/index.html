@@ -51,6 +51,18 @@ table, th, td {
 		    		</tr>
 		    	</tbody>
 		    </table>
+		    <table class="table" th:unless="${#lists.isEmpty(languages)}">
+		    	<tbody>
+		    		<tr>
+		    			<td>Total Books</td>
+		    			<td th:text="${totalBooks}"></td>
+		    		</tr>
+		    		<tr>
+		    			<td>Total Pages</td>
+		    			<td th:text="${totalPages}"></td>
+		    		</tr>
+		    	</tbody>
+		    </table>
 		</div>
 	</div>
 </div>
