@@ -8,7 +8,7 @@
 <div class="container">
 	<div class="row">
 		<h1>Add Log</h1>
-		<form th:action="@{/save}" th:object="${book}" method="post">
+		<form th:action="@{/saveLog}" th:object="${book}" method="post">
 		<input type="hidden" th:field="*{username}" id="username">
 		<input type="hidden" th:field="*{id}" id="id">
 		<input type="hidden" th:field="*{title}" id="title">

@@ -107,8 +107,21 @@ public class PageController {
 		return "redirect:/";
 	}
 
-	@PostMapping("save")
-	public String save(@Valid @ModelAttribute("book") final BookDto bookDTO, Authentication authentication,
+	@PostMapping("/saveLog")
+	public String saveLog(@Valid @ModelAttribute("book") final BookDto bookDTO, BindingResult result,
+			Authentication authentication, Model model) {
+		if (result.hasErrors()) {
+			return ADD_LOG_PAGE;
+		}
+		Book book = bookService.findById(bookDTO.getId());
+		AppUser user = appUserService.findByUsername(authentication.getName())
+				.orElseThrow(() -> new AppUserNotFoundException(authentication.getName()));
+		logService.saveLog(new Log(book, ReadingStatus.FINISHED, bookDTO.getStart(), bookDTO.getFinish(), user));
+		return "redirect:/";
+	}
+
+	@PostMapping("/save")
+	public String saveBook(@Valid @ModelAttribute("book") final BookDto bookDTO, Authentication authentication,
 			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return ADD_PAGE;
@@ -117,12 +130,6 @@ public class PageController {
 			authorService.saveAuthor(new Author(bookDTO.getAuthor()));
 		}
 		bookService.saveBook(bookConverter.clientToBook(bookDTO));
-		if (bookDTO.getStart() != null && bookDTO.getFinish() != null) {
-			Book book = bookService.findById(bookDTO.getId());
-			AppUser user = appUserService.findByUsername(authentication.getName())
-					.orElseThrow(() -> new AppUserNotFoundException(authentication.getName()));
-			logService.saveLog(new Log(book, ReadingStatus.FINISHED, bookDTO.getStart(), bookDTO.getFinish(), user));
-		}
 		return "redirect:/";
 	}
 
