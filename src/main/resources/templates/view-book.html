@@ -40,12 +40,14 @@
 				<tr>
 					<th>Start</th>
 					<th>Finish</th>
+					<th>Status</th>
 				</tr>
 			</thead>
 			<tbody>
 			    <tr th:each="log: ${logs}">
 					<td th:text="${#temporals.format(log.start,'MM-dd-yyyy')}" />
 					<td th:text="${#temporals.format(log.finish,'MM-dd-yyyy')}" />
+					<td th:text="${log.status.value}"></td>
 				</tr>
 			</tbody>
 		</table>

@@ -116,8 +116,12 @@ public class PageController {
 		Book book = bookService.findById(bookDTO.getId());
 		AppUser user = appUserService.findByUsername(authentication.getName())
 				.orElseThrow(() -> new AppUserNotFoundException(authentication.getName()));
-		logService.saveLog(new Log(book, ReadingStatus.FINISHED, bookDTO.getStart(), bookDTO.getFinish(), user));
-		return "redirect:/";
+		if (bookDTO.getFinish() == null) {
+			logService.saveLog(new Log(book, ReadingStatus.IN_PROGRESS, bookDTO.getStart(), bookDTO.getFinish(), user));
+		} else {
+			logService.saveLog(new Log(book, ReadingStatus.FINISHED, bookDTO.getStart(), bookDTO.getFinish(), user));
+		}
+		return "redirect:/view/" + book.getId();
 	}
 
 	@PostMapping("/save")
