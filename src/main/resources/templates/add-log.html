@@ -7,30 +7,35 @@
 <div th:insert="~{header :: navigation}"></div>
 <div class="container">
 	<div class="row">
-		<h1>Add Log</h1>
-		<form th:action="@{/saveLog}" th:object="${book}" method="post">
-		<input type="hidden" th:field="*{username}" id="username">
-		<input type="hidden" th:field="*{id}" id="id">
-		<input type="hidden" th:field="*{title}" id="title">
-		<input type="hidden" th:field="*{author}" id="author">
-		<input type="hidden" th:field="*{language}" id="language">
-		<input type="hidden" th:field="*{pages}" id="pages">
+		<div class="col">
+			<h1>Add Log</h1>
+			<form th:action="@{/saveLog}" th:object="${book}" method="post">
+			<input type="hidden" th:field="*{username}" id="username">
+			<input type="hidden" th:field="*{id}" id="id">
+			<input type="hidden" th:field="*{title}" id="title">
+			<input type="hidden" th:field="*{author}" id="author">
+			<input type="hidden" th:field="*{language}" id="language">
+			<input type="hidden" th:field="*{pages}" id="pages">
 		
-			<table>
+			<table class="table">
 				<tr>
 					<td>Start:</td>
-					<td><input type="date" th:field="*{{start}}" /><span th:if="${#fields.hasErrors('start')}" th:errors="*{start}"></span></td>
+					<td><input type="date" th:field="*{{start}}" /></td>
+					<td><span th:if="${#fields.hasErrors('start')}" th:errors="*{start}"></span></td>
 				</tr>
 				<tr>
 					<td>Finish:</td>
-					<td><input type="date" th:field="*{{finish}}" /><span th:if="${#fields.hasErrors('finish')}" th:errors="*{finish}"></span></td>
+					<td><input type="date" th:field="*{{finish}}" /></td>
+					<td><span th:if="${#fields.hasErrors('finish')}" th:errors="*{finish}"></span></td>
 				</tr>
 			</table>
 			<button type="submit">Add Log</button>
-		</form>
-		<form th:action="@{@{/view/{id}(id=${book.id})}}" th:object="${book}" method="get">
-			<button type="submit">Cancel</button>
-		</form>
+			</form>
+			<br>
+			<form th:action="@{/view/{id}(id=${book.id})}" th:object="${book}" method="get">
+				<button type="submit">Cancel</button>
+			</form>
+		</div>
 	</div>
 </div>
 </body>
