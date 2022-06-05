@@ -48,6 +48,8 @@
 					<td th:text="${#temporals.format(log.start,'MM-dd-yyyy')}" />
 					<td th:text="${#temporals.format(log.finish,'MM-dd-yyyy')}" />
 					<td th:text="${log.status.value}"></td>
+					<td><a th:href="@{/editLog/{id}(id=${log.id})}"><span>Edit</span></a></td>
+					<td><a th:href="@{/deleteLog/{id}(id=${log.id})}"><span>Delete</span></a></td>
 				</tr>
 			</tbody>
 		</table>

@@ -107,6 +107,13 @@ public class PageController {
 		return "redirect:/";
 	}
 
+	@GetMapping("/deleteLog/{id}")
+	public String deleteLog(@PathVariable("id") Long id, Authentication authentication, Model model) {
+		Book book = bookService.findById(logService.findById(id).getBook().getId());
+		logService.deleteLog(id);
+		return "redirect:/view/" + book.getId();
+	}
+
 	@PostMapping("/saveLog")
 	public String saveLog(@Valid @ModelAttribute("book") final BookDto bookDTO, BindingResult result,
 			Authentication authentication, Model model) {
@@ -116,6 +123,7 @@ public class PageController {
 		Book book = bookService.findById(bookDTO.getId());
 		AppUser user = appUserService.findByUsername(authentication.getName())
 				.orElseThrow(() -> new AppUserNotFoundException(authentication.getName()));
+
 		if (bookDTO.getFinish() == null) {
 			logService.saveLog(new Log(book, ReadingStatus.IN_PROGRESS, bookDTO.getStart(), bookDTO.getFinish(), user));
 		} else {
