@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,6 +14,8 @@ public class BookDto {
 	private String title;
 	@NotBlank(message = "Author cannot be empty.")
 	private String author;
+	@NotBlank(message = "Language cannot be empty.")
+	@Size(min = 2)
 	private String language;
 	private int pages;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
