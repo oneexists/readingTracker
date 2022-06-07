@@ -34,12 +34,12 @@ import com.readingTracker.web.dto.BookDto;
 
 @Controller
 public class PageController {
-	private final String ADD_PAGE = "add-book";
+	private final String ADD_BOOK_PAGE = "books/add-book";
 	private final String INDEX_PAGE = "index";
-	private final String EDIT_PAGE = "edit-book";
+	private final String EDIT_PAGE = "books/edit-book";
 	private final String LOGIN_PAGE = "login";
-	private final String ADD_LOG_PAGE = "add-log";
-	private final String VIEW_BOOK_PAGE = "view-book";
+	private final String ADD_LOG_PAGE = "logs/add-log";
+	private final String VIEW_BOOK_PAGE = "books/view-book";
 
 	private final BookService bookService;
 	private final AuthorService authorService;
@@ -82,7 +82,7 @@ public class PageController {
 	@GetMapping("/addBook")
 	public String addBook(Authentication authentication, Model model) {
 		model.addAttribute("book", new BookDto(authentication.getName()));
-		return ADD_PAGE;
+		return ADD_BOOK_PAGE;
 	}
 
 	@GetMapping("addLog/{id}")
@@ -134,10 +134,10 @@ public class PageController {
 	}
 
 	@PostMapping("/save")
-	public String saveBook(@Valid @ModelAttribute("book") final BookDto bookDTO, Authentication authentication,
-			BindingResult result, Model model) {
+	public String saveBook(@Valid @ModelAttribute("book") final BookDto bookDTO, BindingResult result,
+			Authentication authentication, Model model) {
 		if (result.hasErrors()) {
-			return ADD_PAGE;
+			return ADD_BOOK_PAGE;
 		}
 		if (authorService.findByName(bookDTO.getAuthor()) == null) {
 			authorService.saveAuthor(new Author(bookDTO.getAuthor()));
