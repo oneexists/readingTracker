@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common-head :: common_head(~{::title},~{})">
+	<title>Add Book</title>
+</head>
+<body>
+<div th:insert="~{header :: navigation}"></div>
+<div class="container">
+	<div class="row">
+		<div class="col">
+		<table class="table">
+		<form th:action="@{/save}" th:object="${book}" method="post">
+		<legend>Add New Book</legend>
+		<input type="hidden" th:field="*{username}" id="username">
+			<tbody>
+				<tr>
+				<div class="control-group input" th:class="${#fields.hasErrors('title')} ? 'control-group input error'">
+					<td>
+						<p>Title:</p>
+					</td>
+					<td>
+						<input type="text" th:field="*{title}"/>
+						<span class="help-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+					</td>
+				</div>
+				</tr>
+				<tr>
+					<div class="control-group input" th:class="${#fields.hasErrors('author')} ? 'control-group input error'">
+					<td>
+						<p>Author:</p>
+					</td>
+					<td>
+						<input type="text" th:field="*{author}"/>
+						<span class="help-block" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+					</td>
+					</div>
+				</tr>
+				<tr>
+					<div class="control-group input" th:class="${#fields.hasErrors('language')} ? 'control-group input error'">
+					<td>
+						<p>Language:</p>
+					</td>
+					<td>
+						<input type="text" th:field="*{language}"/>
+						<span class="help-block" th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></span>
+					</td>
+					</div>
+				</tr>
+				<tr>
+					<div class="control-group input">	
+					<td>
+						<p>Pages:</p>
+					</td>
+					<td>
+						<input type="text" th:field="*{pages}"/>
+					</td>
+					</div>		
+				</tr>
+				<tr>
+					<td>
+						<button type="submit">Add</button>
+					</td>
+					<td>						
+						<div>
+							<form action="/">
+								<button type="submit">Cancel</button>
+							</form>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</form>
+		</table>
+		</div>
+	</div>
+</div>
+</body>
+</html>
