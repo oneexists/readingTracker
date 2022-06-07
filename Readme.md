@@ -52,9 +52,9 @@ facilitate interaction
 
 # Target Process
 
-- Provide reading summary statistics
+- Provide additional reading summary statistics
 
-- Improve UI interaction in web interface
+- Provide a dynamic list of logs
 
 # Functional Requirements
 
@@ -64,7 +64,7 @@ facilitate interaction
 
 - Create, view, update, and delete books
 
-- Create reading logs
+- Create and delete reading logs
 
 # Non-Functional Requirements
 
