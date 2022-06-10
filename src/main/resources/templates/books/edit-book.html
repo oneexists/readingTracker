@@ -7,33 +7,62 @@
 <div th:insert="~{header :: navigation}"></div>
 <div class="container">
 	<div class="row">
-		<h1>Update Book</h1>
-		<form th:action="@{/save}" th:object="${book}" method="post">
-		<input type="hidden" th:field="*{username}" id="username">
-		<input type="hidden" th:field="*{id}" id="id">
-		<table class="table">
-			<tr>
-				<td>Title:</td>
-				<td><input type="text" th:field="*{title}" id="title" placeholder="Title" /> <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span></td>
-			</tr>
-			<tr>
-				<td>Author:</td>
-				<td><input type="text" th:field="*{author}" id="author" placeholder="Author" /> <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span></td>
-			</tr>
-			<tr>
-				<td>Language:</td>
-				<td><input type="text" th:field="*{language}" id="language" placeholder="Langauge" /></td>
-			</tr>
-			<tr>
-				<td>Pages:</td>
-				<td><input type="text" th:field="*{pages}" id="pages" placeholder="Pages" /></td>
-			</tr>
-		</table>
-		<button type="submit">Update</button>
-	</form>
-	<form action="/">
-		<button type="submit">Cancel</button>
-	</form>
+		<div class="col">
+			<table class="table">
+			<form th:action="@{/save}" th:object="${book}" method="post">
+			<legend>Update Book</legend>
+			<input type="hidden" th:field="*{username}" id="username">
+			<input type="hidden" th:field="*{id}" id="id">
+				<tbody>
+					<tr>
+					<div class="form-group input" th:class="${#fields.hasErrors('title')} ? 'control-group-input error'">
+						<td><p>Title:</p></td>
+						<td>
+							<input id="title" class="form-control" type="text" th:field="*{title}" placeholder="Title" required autofocus="autofocus" /> 
+							<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+						</td>
+					</div>
+					</tr>
+					<tr>
+					<div class="form-group input" th:class="${#fields.hasErrors('title')} ? 'control-group-input error'">
+						<td><p>Author:</p></td>
+						<td>
+							<input id="author" class="form-control" type="text" th:field="*{author}" placeholder="Author" required autofocus="autofocus" /> 
+							<span th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+						</td>
+					</div>
+					</tr>
+					<tr>
+					<div class="form-group input" th:class="${#fields.hasErrors('title')} ? 'control-group-input error'">
+						<td><p>Language:</p></td>
+						<td>
+							<input id="language" class="form-control" type="text" th:field="*{language}" placeholder="Langauge" required autofocus="autofocus" />
+							<span th:if="${#fields.hasErrors('language')}" th:errors="*{language}"></span>
+						</td>
+					</div>
+					</tr>
+					<tr>
+					<div class="form-group input">
+						<td><p>Pages:</p></td>
+						<td>
+							<input id="pages" class="form-control" type="text" th:field="*{pages}" placeholder="Pages" />
+						</td>
+					</div>
+					</tr>
+					<tr>
+						<td><button type="submit" class="btn btn-success">Update</button></td>
+						<td>
+							<div class="form-group">
+								<form action="/">
+									<button type="submit" class="btn">Cancel</button>
+								</form>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</form>
+			</table>
+		</div>
 	</div>
 </div>
 </body>

@@ -8,33 +8,47 @@
 <div class="container">
 	<div class="row">
 		<div class="col">
-			<h1>Add Log</h1>
+			<table class="table">
 			<form th:action="@{/saveLog}" th:object="${book}" method="post">
+			<legend>Add New Log</legend>
 			<input type="hidden" th:field="*{username}" id="username">
 			<input type="hidden" th:field="*{id}" id="id">
 			<input type="hidden" th:field="*{title}" id="title">
 			<input type="hidden" th:field="*{author}" id="author">
 			<input type="hidden" th:field="*{language}" id="language">
 			<input type="hidden" th:field="*{pages}" id="pages">
-		
-			<table class="table">
-				<tr>
-					<td>Start:</td>
-					<td><input type="date" th:field="*{{start}}" /></td>
-					<td><span th:if="${#fields.hasErrors('start')}" th:errors="*{start}"></span></td>
-				</tr>
-				<tr>
-					<td>Finish:</td>
-					<td><input type="date" th:field="*{{finish}}" /></td>
-					<td><span th:if="${#fields.hasErrors('finish')}" th:errors="*{finish}"></span></td>
-				</tr>
+				<tbody>			
+					<tr>
+					<div class="form-group input" th:class="${#fields.hasErrors('start')} ? 'control-group input error'">
+						<td><p>Start:</p></td>
+						<td>
+							<input id="start" class="form-control" type="date" th:field="*{{start}}" required autofocus="autofocus" />
+							<span th:if="${#fields.hasErrors('start')}" th:errors="*{start}"></span>
+						</td>
+					</div>
+					</tr>
+					<tr>
+					<div class="form-group input" th:class="${#fields.hasErrors('finish')} ? 'control-group input error'">
+						<td><p>Finish:</p></td>
+						<td>
+							<input id="finish" class="form-control" type="date" th:field="*{{finish}}" />
+							<span th:if="${#fields.hasErrors('finish')}" th:errors="*{finish}"></span>
+						</td>
+					</div>
+					</tr>
+					<tr>
+						<td><button type="submit">Add Log</button></td>
+						<td>
+							<div class="form-group input">
+								<form th:action="@{/view/{id}(id=${book.id})}" th:object="${book}" method="get">
+									<button type="submit">Cancel</button>
+								</form>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				</form>
 			</table>
-			<button type="submit">Add Log</button>
-			</form>
-			<br>
-			<form th:action="@{/view/{id}(id=${book.id})}" th:object="${book}" method="get">
-				<button type="submit">Cancel</button>
-			</form>
 		</div>
 	</div>
 </div>

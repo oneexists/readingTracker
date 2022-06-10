@@ -18,6 +18,10 @@ View and edit book details:
 
 ![Edit Book Page](https://github.com/oneexists/readingTracker/blob/main/img/edit_book.png)
 
+Add logs to track your reading:
+
+![Add Log Page](https://github.com/oneexists/readingTracker/blob/main/img/add_log.png)
+
 # Domain Model
 
 ![Reading Tracker Domain Model](https://github.com/oneexists/readingTracker/blob/main/img/reading_tracker_domain.png)
@@ -68,8 +72,8 @@ facilitate interaction
 
 # Non-Functional Requirements
 
-- Look and Feel: improve front-end development skills by learning new technologies to
-improve UI/UX of web interface
+- Look and Feel:
+    - add Bootstrap to improve UI display of forms
 
 - Usability:
     - provide hypermedia driven RESTful API
