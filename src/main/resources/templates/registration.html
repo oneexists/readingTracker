@@ -22,8 +22,8 @@
 			<div th:if="${param.success}">
 				<div class="alert alert-info">You have successfully registered!</div>
 			</div>
-			<h1>Registration</h1>
 			<form th:action="@{/registration}" method="post" th:object="${appUser}">
+			<legend>Registration</legend>
 				<div class="form-group">
 					<label class="control-label" for="name">Name </label>
 					<input id="name" class="form-control" type="text" th:field="*{name}" required autofocus="autofocus" />
