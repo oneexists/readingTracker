@@ -36,8 +36,8 @@ table, th, td {
 		        </tbody>
 		    </table>
 		    <br>
-		    <h3>Reading Summary</h3>
 		    <table class="table" th:unless="${#lists.isEmpty(languages)}">
+		    <legend>Reading Summary</legend>
 				<thead>
 					<tr>
 						<th>Language</th>
@@ -51,6 +51,7 @@ table, th, td {
 		    		</tr>
 		    	</tbody>
 		    </table>
+			<br>
 		    <table class="table" th:unless="${#lists.isEmpty(languages)}">
 		    	<tbody>
 		    		<tr>

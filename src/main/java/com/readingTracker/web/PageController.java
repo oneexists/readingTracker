@@ -66,16 +66,16 @@ public class PageController {
 
 	@GetMapping("/")
 	public String home(Authentication authentication, Model model) {
-		Map<String, List<Log>> logMap = logService.findByUsername(authentication.getName()).stream()
+		List<Log> finishedLogs = logService.findByUsername(authentication.getName());
+		finishedLogs.removeIf(log -> log.getStatus() != ReadingStatus.FINISHED);
+
+		Map<String, List<Log>> logMap = finishedLogs.stream()
 				.collect(Collectors.groupingBy(log -> log.getBook().getLanguage()));
-		int totalBooks = logMap.values().stream().collect(Collectors.summingInt(list -> list.stream()
-				.collect(Collectors.summingInt(log -> (log.getStatus() == ReadingStatus.FINISHED) ? 1 : 0))));
-		int totalPages = logMap.values().stream().collect(Collectors.summingInt(list -> list.stream().collect(Collectors
-				.summingInt(log -> (log.getStatus() == ReadingStatus.FINISHED) ? log.getBook().getPages() : 0))));
+		int totalPages = finishedLogs.stream().collect(Collectors.summingInt(log -> log.getBook().getPages()));
 
 		model.addAttribute("books", bookService.findByUsername(authentication.getName()));
 		model.addAttribute("languages", logMap);
-		model.addAttribute("totalBooks", totalBooks);
+		model.addAttribute("totalBooks", finishedLogs.size());
 		model.addAttribute("totalPages", totalPages);
 		return INDEX_PAGE;
 	}
