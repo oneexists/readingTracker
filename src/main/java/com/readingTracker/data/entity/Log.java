@@ -26,7 +26,7 @@ public class Log implements Serializable {
 		super();
 	}
 
-	public Log(Book book, ReadingStatus status, LocalDate start, LocalDate finish, AppUser user) {
+	public Log(Book book, ReadingStatus status, LocalDate start, LocalDate finish) {
 		super();
 		this.book = book;
 		this.status = status;
@@ -34,7 +34,7 @@ public class Log implements Serializable {
 		this.finish = finish;
 	}
 
-	public Log(Long id, Book book, ReadingStatus status, LocalDate start, LocalDate finish, AppUser user) {
+	public Log(Long id, Book book, ReadingStatus status, LocalDate start, LocalDate finish) {
 		super();
 		this.id = id;
 		this.book = book;
