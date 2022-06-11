@@ -5,7 +5,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -19,6 +18,7 @@ import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.entity.Author;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.UserRole;
+import com.readingTracker.data.entity.factory.AppUserProvider;
 import com.readingTracker.data.repository.BookRepository;
 import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.BookService;
@@ -44,10 +44,11 @@ class BookServiceTests {
 	@BeforeEach
 	void setUp() {
 		service = new BookServiceImpl(repository, appUserService);
-		appUser = new AppUser("Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25), UserRole.ROLE_USER);
+		appUser = AppUserProvider.getFactory().create("Jesse Jackson", "user", "magnets",
+				LocalDate.now().minusYears(25), UserRole.ROLE_USER);
 		author = new Author(5L, "Walt Whitman");
 		newBook = new Book();
-		testBook = new Book(2L, "book title", author, "English", 32, new HashSet<>(), appUser);
+		testBook = new Book(2L, "book title", author, "English", 32, appUser);
 	}
 
 	@AfterEach

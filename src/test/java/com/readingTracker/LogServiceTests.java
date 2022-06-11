@@ -5,7 +5,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -21,6 +20,7 @@ import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.Log;
 import com.readingTracker.data.entity.ReadingStatus;
 import com.readingTracker.data.entity.UserRole;
+import com.readingTracker.data.entity.factory.AppUserProvider;
 import com.readingTracker.data.repository.LogRepository;
 import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.BookService;
@@ -54,9 +54,10 @@ class LogServiceTests {
 	void setUp() throws Exception {
 		service = new LogServiceImpl(repository, appUserService, bookService);
 		author = new Author(5L, "Walt Whitman");
-		appUser = new AppUser("Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25), UserRole.ROLE_USER);
-		book = new Book(2L, "book title", author, "English", 32, new HashSet<>(), appUser);
-		testLog = new Log(3L, book, ReadingStatus.FINISHED, LocalDate.now().minusMonths(1), LocalDate.now(), appUser);
+		appUser = AppUserProvider.getFactory().create("Jesse Jackson", "user", "magnets",
+				LocalDate.now().minusYears(25), UserRole.ROLE_USER);
+		book = new Book(2L, "book title", author, "English", 32, appUser);
+		testLog = new Log(3L, book, ReadingStatus.FINISHED, LocalDate.now().minusMonths(1), LocalDate.now());
 	}
 
 	/**

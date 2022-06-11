@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.entity.UserRole;
+import com.readingTracker.data.entity.factory.AppUserProvider;
 import com.readingTracker.data.repository.AppUserRepository;
 import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.exceptions.AppUserNotFoundException;
@@ -89,9 +90,8 @@ public class AppUserServiceImpl implements AppUserService {
 
 	@Override
 	public AppUser registerUser(AppUserRegistrationDto appUserDto) {
-		AppUser newUser = new AppUser(appUserDto.getName(), appUserDto.getUsername(),
-				passwordEncoder.encode(appUserDto.getPassword()), LocalDate.parse(appUserDto.getDateOfBirth()),
-				UserRole.ROLE_USER);
-		return appUserRepository.save(newUser);
+		return appUserRepository.save(AppUserProvider.getFactory().create(appUserDto.getName(),
+				appUserDto.getUsername(), passwordEncoder.encode(appUserDto.getPassword()),
+				LocalDate.parse(appUserDto.getDateOfBirth()), UserRole.ROLE_USER));
 	}
 }

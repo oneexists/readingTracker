@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.entity.UserRole;
+import com.readingTracker.data.entity.factory.AppUserFactory;
+import com.readingTracker.data.entity.factory.AppUserProvider;
 import com.readingTracker.data.repository.AppUserRepository;
 import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.impl.AppUserServiceImpl;
@@ -42,9 +44,11 @@ class AppUserServiceTests {
 	@BeforeEach
 	void setUp() throws Exception {
 		service = new AppUserServiceImpl(repository, passwordEncoder);
-		newAppUser = new AppUser();
-		testAppUser = new AppUser("Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25),
+		AppUserFactory userFactory = AppUserProvider.getFactory();
+
+		testAppUser = userFactory.create("Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25),
 				UserRole.ROLE_USER);
+		newAppUser = userFactory.create(null, null, null, null, null);
 		appUserDto = new AppUserRegistrationDto("Mike", "security", "newpass",
 				LocalDate.now().minusYears(40).toString());
 	}
