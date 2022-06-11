@@ -40,6 +40,7 @@ public class PageController {
 	private final String LOGIN_PAGE = "login";
 	private final String ADD_LOG_PAGE = "logs/add-log";
 	private final String VIEW_BOOK_PAGE = "books/view-book";
+	private final String VIEW_LOGS_PAGE = "logs/view-logs";
 
 	private final BookService bookService;
 	private final AuthorService authorService;
@@ -152,5 +153,11 @@ public class PageController {
 		model.addAttribute("book", book);
 		model.addAttribute("logs", logService.findByBook(book));
 		return VIEW_BOOK_PAGE;
+	}
+
+	@GetMapping("/viewLogs")
+	public String viewLogs(Authentication authentication, Model model) {
+		model.addAttribute("logs", logService.findByUsername(authentication.getName()));
+		return VIEW_LOGS_PAGE;
 	}
 }
