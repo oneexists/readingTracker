@@ -18,16 +18,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.entity.Author;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.Log;
 import com.readingTracker.data.entity.ReadingStatus;
-import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.AuthorService;
 import com.readingTracker.service.BookService;
 import com.readingTracker.service.LogService;
-import com.readingTracker.service.exceptions.AppUserNotFoundException;
 import com.readingTracker.web.domain.BookConverter;
 import com.readingTracker.web.dto.AppUserRegistrationDto;
 import com.readingTracker.web.dto.BookDto;
@@ -45,16 +42,14 @@ public class PageController {
 	private final BookService bookService;
 	private final AuthorService authorService;
 	private final LogService logService;
-	private final AppUserService appUserService;
 	private final BookConverter bookConverter;
 
 	@Autowired
 	public PageController(BookService bookService, AuthorService authorService, LogService logService,
-			AppUserService appUserService, BookConverter bookConverter) {
+			BookConverter bookConverter) {
 		this.bookService = bookService;
 		this.authorService = authorService;
 		this.logService = logService;
-		this.appUserService = appUserService;
 		this.bookConverter = bookConverter;
 	}
 
@@ -68,12 +63,15 @@ public class PageController {
 	public String home(Authentication authentication, Model model) {
 		List<Log> finishedLogs = logService.findByUsername(authentication.getName());
 		finishedLogs.removeIf(log -> log.getStatus() != ReadingStatus.FINISHED);
+		List<Log> currentlyReading = logService.findByUsername(authentication.getName());
+		currentlyReading.removeIf(log -> log.getStatus() != ReadingStatus.IN_PROGRESS);
 
 		Map<String, List<Log>> logMap = finishedLogs.stream()
 				.collect(Collectors.groupingBy(log -> log.getBook().getLanguage()));
 		int totalPages = finishedLogs.stream().collect(Collectors.summingInt(log -> log.getBook().getPages()));
 
 		model.addAttribute("books", bookService.findByUsername(authentication.getName()));
+		model.addAttribute("currentlyReading", currentlyReading);
 		model.addAttribute("languages", logMap);
 		model.addAttribute("totalBooks", finishedLogs.size());
 		model.addAttribute("totalPages", totalPages);
@@ -123,13 +121,11 @@ public class PageController {
 			return ADD_LOG_PAGE;
 		}
 		Book book = bookService.findById(bookDTO.getId());
-		AppUser user = appUserService.findByUsername(authentication.getName())
-				.orElseThrow(() -> new AppUserNotFoundException(authentication.getName()));
 
 		if (bookDTO.getFinish() == null) {
-			logService.saveLog(new Log(book, ReadingStatus.IN_PROGRESS, bookDTO.getStart(), bookDTO.getFinish(), user));
+			logService.saveLog(new Log(book, ReadingStatus.IN_PROGRESS, bookDTO.getStart(), bookDTO.getFinish()));
 		} else {
-			logService.saveLog(new Log(book, ReadingStatus.FINISHED, bookDTO.getStart(), bookDTO.getFinish(), user));
+			logService.saveLog(new Log(book, ReadingStatus.FINISHED, bookDTO.getStart(), bookDTO.getFinish()));
 		}
 		return "redirect:/view/" + book.getId();
 	}

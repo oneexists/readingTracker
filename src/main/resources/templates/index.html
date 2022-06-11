@@ -36,6 +36,22 @@ table, th, td {
 		        </tbody>
 		    </table>
 		    <br>
+		    <table class="table" th:unless="${currentlyReading == null}">
+			<legend>Currently Reading</legend>
+				<thead>
+					<th>Title</th>
+					<th>Language</th>
+					<th>Pages</th>
+				</thead>
+				<tbody>
+					<tr th:each="log: ${currentlyReading}">
+						<td th:text="${log.book.title}"></td>
+						<td th:text="${log.book.language}"></td>
+						<td th:text="${log.book.pages}"></td>
+					</tr>
+				</tbody>
+		    </table>
+		    <br>
 		    <table class="table" th:unless="${#lists.isEmpty(languages)}">
 		    <legend>Reading Summary</legend>
 				<thead>
