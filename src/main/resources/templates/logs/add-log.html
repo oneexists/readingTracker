@@ -17,7 +17,10 @@
 			<input type="hidden" th:field="*{author}" id="author">
 			<input type="hidden" th:field="*{language}" id="language">
 			<input type="hidden" th:field="*{pages}" id="pages">
-				<tbody>			
+				<tbody>	
+					<tr>
+						<td th:text="*{title + ' by ' + author}" colwidth="2"></td>
+					</tr>
 					<tr>
 					<div class="form-group input" th:class="${#fields.hasErrors('start')} ? 'control-group input error'">
 						<td><p>Start:</p></td>
@@ -37,14 +40,7 @@
 					</div>
 					</tr>
 					<tr>
-						<td><button type="submit">Add Log</button></td>
-						<td>
-							<div class="form-group input">
-								<form th:action="@{/view/{id}(id=${book.id})}" th:object="${book}" method="get">
-									<button type="submit">Cancel</button>
-								</form>
-							</div>
-						</td>
+						<td style="text-align:center" colspan="2"><button type="submit" class="btn btn-success">Add Log</button></td>
 					</tr>
 				</tbody>
 				</form>
