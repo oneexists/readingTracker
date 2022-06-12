@@ -19,6 +19,7 @@ import com.readingTracker.data.entity.Author;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.UserRole;
 import com.readingTracker.data.entity.factory.AppUserProvider;
+import com.readingTracker.data.entity.factory.AuthorProvider;
 import com.readingTracker.data.repository.BookRepository;
 import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.BookService;
@@ -46,7 +47,7 @@ class BookServiceTests {
 		service = new BookServiceImpl(repository, appUserService);
 		appUser = AppUserProvider.getFactory().create("Jesse Jackson", "user", "magnets",
 				LocalDate.now().minusYears(25), UserRole.ROLE_USER);
-		author = new Author(5L, "Walt Whitman");
+		author = AuthorProvider.getFactory().create(5L, "Walt Whitman");
 		newBook = new Book();
 		testBook = new Book(2L, "book title", author, "English", 32, appUser);
 	}

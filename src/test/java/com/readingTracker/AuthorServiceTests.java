@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.readingTracker.data.entity.Author;
+import com.readingTracker.data.entity.factory.AuthorProvider;
 import com.readingTracker.data.repository.AuthorRepository;
 import com.readingTracker.service.AuthorService;
 import com.readingTracker.service.impl.AuthorServiceImpl;
@@ -33,7 +34,7 @@ class AuthorServiceTests {
 	@BeforeEach
 	void setUp() {
 		service = new AuthorServiceImpl(repository);
-		author = new Author(1L, "name");
+		author = AuthorProvider.getFactory().create(1L, "name");
 	}
 
 	@AfterEach

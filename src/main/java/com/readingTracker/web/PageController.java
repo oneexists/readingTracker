@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.readingTracker.data.entity.Author;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.Log;
 import com.readingTracker.data.entity.ReadingStatus;
+import com.readingTracker.data.entity.factory.AuthorProvider;
 import com.readingTracker.service.AuthorService;
 import com.readingTracker.service.BookService;
 import com.readingTracker.service.LogService;
@@ -137,7 +137,7 @@ public class PageController {
 			return ADD_BOOK_PAGE;
 		}
 		if (authorService.findByName(bookDTO.getAuthor()) == null) {
-			authorService.saveAuthor(new Author(bookDTO.getAuthor()));
+			authorService.saveAuthor(AuthorProvider.getFactory().create(bookDTO.getAuthor()));
 		}
 		bookService.saveBook(bookConverter.clientToBook(bookDTO));
 		return "redirect:/";
