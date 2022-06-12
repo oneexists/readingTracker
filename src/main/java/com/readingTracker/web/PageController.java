@@ -22,6 +22,7 @@ import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.Log;
 import com.readingTracker.data.entity.ReadingStatus;
 import com.readingTracker.data.entity.factory.AuthorProvider;
+import com.readingTracker.data.entity.factory.LogProvider;
 import com.readingTracker.service.AuthorService;
 import com.readingTracker.service.BookService;
 import com.readingTracker.service.LogService;
@@ -123,9 +124,11 @@ public class PageController {
 		Book book = bookService.findById(bookDTO.getId());
 
 		if (bookDTO.getFinish() == null) {
-			logService.saveLog(new Log(book, ReadingStatus.IN_PROGRESS, bookDTO.getStart(), bookDTO.getFinish()));
+			logService.saveLog(LogProvider.getFactory().create(book, ReadingStatus.IN_PROGRESS, bookDTO.getStart(),
+					bookDTO.getFinish()));
 		} else {
-			logService.saveLog(new Log(book, ReadingStatus.FINISHED, bookDTO.getStart(), bookDTO.getFinish()));
+			logService.saveLog(LogProvider.getFactory().create(book, ReadingStatus.FINISHED, bookDTO.getStart(),
+					bookDTO.getFinish()));
 		}
 		return "redirect:/view/" + book.getId();
 	}
