@@ -29,8 +29,8 @@
 			</table>
 			<table class="table">
 				<tr>
-					<td><a th:href="@{/editBook/{id}(id=${book.id})}"><span>Edit</span></a></td>
-					<td><a th:href="@{/deleteBook/{id}(id=${book.id})}"><span>Remove</span></a></td>
+					<td><a th:href="@{/books/edit{id}(id=${book.id})}"><span>Edit</span></a></td>
+					<td><a th:href="@{/books/delete{id}(id=${book.id})}"><span>Remove</span></a></td>
 					<td><a th:href="@{/logs/add{id}(id=${book.id})}"><span>Add reading log</span></a></td>
 				</tr>
 			</table>	
@@ -48,7 +48,7 @@
 					<td th:text="${#temporals.format(log.start,'MM-dd-yyyy')}" />
 					<td th:text="${#temporals.format(log.finish,'MM-dd-yyyy')}" />
 					<td th:text="${log.status.value}"></td>
-					<td><a th:href="@{/editLog/{id}(id=${log.id})}"><span>Edit</span></a></td>
+					<td><a th:href="@{/logs/edit{id}(id=${log.id})}"><span>Edit</span></a></td>
 					<td><a th:href="@{/logs/delete{id}(id=${log.id})}"><span>Delete</span></a></td>
 				</tr>
 			</tbody>

@@ -9,7 +9,7 @@
 	<div class="row">
 		<div class="col">
 			<table class="table">
-			<form th:action="@{/save}" th:object="${book}" method="post">
+			<form th:action="@{/books/save}" th:object="${book}" method="post">
 			<legend>Update Book</legend>
 			<input type="hidden" th:field="*{username}" id="username">
 			<input type="hidden" th:field="*{id}" id="id">

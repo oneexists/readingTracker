@@ -26,12 +26,12 @@ table, th, td {
 		        </thead>
 		        <tbody>
 		        <tr th:each="book: ${books}">
-		            <td><a th:href="@{/view/{id}(id=${book.id})}"><span th:text="${book.title}" /></a></td>
+		            <td><a th:href="@{/books/{id}(id=${book.id})}"><span th:text="${book.title}" /></a></td>
 		            <td th:text="${book.author.name}"></td>
 		            <td th:text="${book.language}"></td>
 		            <td th:text="${book.pages}"></td>
-		            <td><a th:href="@{/editBook/{id}(id=${book.id})}"><span th:text="Edit" /></a></td>
-		            <td><a th:href="@{/deleteBook/{id}(id=${book.id})}"><span th:text="Delete" /></a></td>
+		            <td><a th:href="@{/books/edit{id}(id=${book.id})}"><span th:text="Edit" /></a></td>
+		            <td><a th:href="@{/books/delete{id}(id=${book.id})}"><span th:text="Delete" /></a></td>
 		        </tr>
 		        </tbody>
 		    </table>

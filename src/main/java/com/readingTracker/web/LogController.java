@@ -47,7 +47,7 @@ public class LogController {
 	}
 
 	@PostMapping("/save")
-	public String addLog(@Valid @ModelAttribute("book") final BookDto bookDto, BindingResult result,
+	public String saveLog(@Valid @ModelAttribute("book") final BookDto bookDto, BindingResult result,
 			Authentication authentication, Model model) {
 		if (result.hasErrors()) {
 			return ADD_LOG_PAGE;
@@ -61,7 +61,7 @@ public class LogController {
 			logService.saveLog(LogProvider.getFactory().create(book, ReadingStatus.FINISHED, bookDto.getStart(),
 					bookDto.getFinish()));
 		}
-		return "redirect:/view/" + book.getId();
+		return "redirect:/books/" + book.getId();
 	}
 
 	@GetMapping("add{id}")
@@ -71,14 +71,14 @@ public class LogController {
 		BookDto bookDTO = bookConverter.bookToClient(book);
 		bookDTO.setStart(LocalDate.now());
 		model.addAttribute("book", bookDTO);
-		return "logs/add-log";
+		return ADD_LOG_PAGE;
 	}
 
 	@GetMapping("/delete{id}")
 	public String deleteLog(@PathVariable("id") Long id, Authentication authentication, Model model) {
 		Book book = bookService.findById(logService.findById(id).getBook().getId());
 		logService.deleteLog(id);
-		return "redirect:/view/" + book.getId();
+		return "redirect:/books/" + book.getId();
 	}
 
 	@GetMapping

@@ -18,7 +18,7 @@
 				</thead>
 				<tbody>
 				<tr th:each="log: ${logs}">
-					<td><a th:href="@{/view/{id}(id=${log.book.id})}"><span th:text="${log.book.title}" /></a></td>
+					<td><a th:href="@{/books{id}(id=${log.book.id})}"><span th:text="${log.book.title}" /></a></td>
 					<td th:text="${#temporals.format(log.start, 'MM-dd-uuuu')}"></td>
 					<td th:text="${#temporals.format(log.finish, 'MM-dd-uuuu')}"></td>
 					<td th:text="${log.status.value}"></td>
