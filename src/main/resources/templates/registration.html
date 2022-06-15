@@ -4,17 +4,7 @@
 	<title>Bookshelf Registration</title>
 </head>
 <body>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Bookshelf Tracker</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#" th:href="@{/}">Home</a></li>
-      <li><a href="/user/login">Login</a></li>
-    </ul>
-  </div>
-</nav>
+<div th:insert="~{login-header :: navigation}"></div>
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
