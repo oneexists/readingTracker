@@ -31,7 +31,7 @@
 				<tr>
 					<td><a th:href="@{/editBook/{id}(id=${book.id})}"><span>Edit</span></a></td>
 					<td><a th:href="@{/deleteBook/{id}(id=${book.id})}"><span>Remove</span></a></td>
-					<td><a th:href="@{/addLog/{id}(id=${book.id})}"><span>Add reading log</span></a></td>
+					<td><a th:href="@{/logs/add{id}(id=${book.id})}"><span>Add reading log</span></a></td>
 				</tr>
 			</table>	
 		</form>
@@ -49,7 +49,7 @@
 					<td th:text="${#temporals.format(log.finish,'MM-dd-yyyy')}" />
 					<td th:text="${log.status.value}"></td>
 					<td><a th:href="@{/editLog/{id}(id=${log.id})}"><span>Edit</span></a></td>
-					<td><a th:href="@{/deleteLog/{id}(id=${log.id})}"><span>Delete</span></a></td>
+					<td><a th:href="@{/logs/delete{id}(id=${log.id})}"><span>Delete</span></a></td>
 				</tr>
 			</tbody>
 		</table>

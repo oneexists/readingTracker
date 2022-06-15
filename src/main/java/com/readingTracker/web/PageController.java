@@ -1,6 +1,5 @@
 package com.readingTracker.web;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -8,7 +7,6 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +20,6 @@ import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.entity.Log;
 import com.readingTracker.data.entity.ReadingStatus;
 import com.readingTracker.data.entity.factory.AuthorProvider;
-import com.readingTracker.data.entity.factory.LogProvider;
 import com.readingTracker.service.AuthorService;
 import com.readingTracker.service.BookService;
 import com.readingTracker.service.LogService;
@@ -36,9 +33,7 @@ public class PageController {
 	private final String INDEX_PAGE = "index";
 	private final String EDIT_PAGE = "books/edit-book";
 	private final String LOGIN_PAGE = "login";
-	private final String ADD_LOG_PAGE = "logs/add-log";
 	private final String VIEW_BOOK_PAGE = "books/view-book";
-	private final String VIEW_LOGS_PAGE = "logs/view-logs";
 
 	private final BookService bookService;
 	private final AuthorService authorService;
@@ -85,16 +80,6 @@ public class PageController {
 		return ADD_BOOK_PAGE;
 	}
 
-	@GetMapping("addLog/{id}")
-	public String addLog(@PathVariable("id") Long id, Authentication authentication, Model model)
-			throws NotFoundException {
-		Book book = bookService.findById(id);
-		BookDto bookDTO = bookConverter.bookToClient(book);
-		bookDTO.setStart(LocalDate.now());
-		model.addAttribute("book", bookDTO);
-		return ADD_LOG_PAGE;
-	}
-
 	@GetMapping("/editBook/{id}")
 	public String editBook(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("book", bookConverter.bookToClient(bookService.findById(id)));
@@ -106,31 +91,6 @@ public class PageController {
 		logService.deleteByBookId(id);
 		bookService.deleteBook(id);
 		return "redirect:/";
-	}
-
-	@GetMapping("/deleteLog/{id}")
-	public String deleteLog(@PathVariable("id") Long id, Authentication authentication, Model model) {
-		Book book = bookService.findById(logService.findById(id).getBook().getId());
-		logService.deleteLog(id);
-		return "redirect:/view/" + book.getId();
-	}
-
-	@PostMapping("/saveLog")
-	public String saveLog(@Valid @ModelAttribute("book") final BookDto bookDTO, BindingResult result,
-			Authentication authentication, Model model) {
-		if (result.hasErrors()) {
-			return ADD_LOG_PAGE;
-		}
-		Book book = bookService.findById(bookDTO.getId());
-
-		if (bookDTO.getFinish() == null) {
-			logService.saveLog(LogProvider.getFactory().create(book, ReadingStatus.IN_PROGRESS, bookDTO.getStart(),
-					bookDTO.getFinish()));
-		} else {
-			logService.saveLog(LogProvider.getFactory().create(book, ReadingStatus.FINISHED, bookDTO.getStart(),
-					bookDTO.getFinish()));
-		}
-		return "redirect:/view/" + book.getId();
 	}
 
 	@PostMapping("/save")
@@ -154,9 +114,4 @@ public class PageController {
 		return VIEW_BOOK_PAGE;
 	}
 
-	@GetMapping("/viewLogs")
-	public String viewLogs(Authentication authentication, Model model) {
-		model.addAttribute("logs", logService.findByUsername(authentication.getName()));
-		return VIEW_LOGS_PAGE;
-	}
 }
