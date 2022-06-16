@@ -81,7 +81,7 @@ public class LogController {
 		return "redirect:/books/" + book.getId();
 	}
 
-	@GetMapping
+	@GetMapping("/all")
 	public String viewLogs(Authentication authentication, Model model) {
 		model.addAttribute("logs", logService.findByUsername(authentication.getName()));
 		return VIEW_LOGS_PAGE;
