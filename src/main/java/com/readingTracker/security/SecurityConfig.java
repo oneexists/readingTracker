@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -58,8 +59,10 @@ public class SecurityConfig {
 			// add filters
 			http.addFilter(customAuthenticationFilter);
 			http.addFilterBefore(new CustomAuthorizationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
-					.antMatcher("/api/**").authorizeRequests().anyRequest()
-					.hasAnyAuthority(Authorities.USER_AUTHORITIES);
+					.authorizeRequests().antMatchers(SecurityConstants.USER_URLS).access("hasRole('ROLE_USER')").and()
+					.authorizeRequests().antMatchers(HttpMethod.POST, "/appUsers").permitAll().and().authorizeRequests()
+					.antMatchers(SecurityConstants.PUBLIC_URLS).permitAll().and().authorizeRequests().anyRequest()
+					.authenticated();
 		}
 	}
 
