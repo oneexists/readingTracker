@@ -33,7 +33,7 @@ public class AppUser implements Serializable {
 	private LocalDate dateOfBirth;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "user_roles")
-	private UserRole userRole;
+	private Role userRole;
 	@OneToMany(mappedBy = "user")
 	private Set<Book> books = new HashSet<>();
 
@@ -41,7 +41,7 @@ public class AppUser implements Serializable {
 		super();
 	}
 
-	public AppUser(String name, String username, String password, LocalDate dateOfBirth, UserRole userRoles) {
+	public AppUser(String name, String username, String password, LocalDate dateOfBirth, Role userRoles) {
 		super();
 		this.name = name;
 		this.username = username;
@@ -70,7 +70,7 @@ public class AppUser implements Serializable {
 		return username;
 	}
 
-	public UserRole getUserRole() {
+	public Role getUserRole() {
 		return userRole;
 	}
 
@@ -90,7 +90,7 @@ public class AppUser implements Serializable {
 		this.username = username;
 	}
 
-	public void setUserRole(UserRole userRole) {
+	public void setUserRole(Role userRole) {
 		this.userRole = userRole;
 	}
 

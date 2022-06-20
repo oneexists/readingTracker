@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.readingTracker.data.entity.AppUser;
-import com.readingTracker.data.entity.UserRole;
+import com.readingTracker.data.entity.Role;
 import com.readingTracker.data.entity.factory.AppUserProvider;
 import com.readingTracker.data.repository.AppUserRepository;
 import com.readingTracker.service.AppUserService;
@@ -92,6 +92,6 @@ public class AppUserServiceImpl implements AppUserService {
 	public AppUser registerUser(AppUserRegistrationDto appUserDto) {
 		return appUserRepository.save(AppUserProvider.getFactory().create(appUserDto.getName(),
 				appUserDto.getUsername(), passwordEncoder.encode(appUserDto.getPassword()),
-				LocalDate.parse(appUserDto.getDateOfBirth()), UserRole.ROLE_USER));
+				LocalDate.parse(appUserDto.getDateOfBirth()), Role.ROLE_USER));
 	}
 }

@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.readingTracker.data.entity.AppUser;
-import com.readingTracker.data.entity.UserRole;
+import com.readingTracker.data.entity.Role;
 import com.readingTracker.data.entity.factory.AppUserFactory;
 import com.readingTracker.data.entity.factory.AppUserProvider;
 import com.readingTracker.data.repository.AppUserRepository;
@@ -47,7 +47,7 @@ class AppUserServiceTests {
 		AppUserFactory userFactory = AppUserProvider.getFactory();
 
 		testAppUser = userFactory.create("Jesse Jackson", "user", "magnets", LocalDate.now().minusYears(25),
-				UserRole.ROLE_USER);
+				Role.ROLE_USER);
 		newAppUser = userFactory.create(null, null, null, null, null);
 		appUserDto = new AppUserRegistrationDto("Mike", "security", "newpass",
 				LocalDate.now().minusYears(40).toString());
@@ -126,7 +126,7 @@ class AppUserServiceTests {
 		assertThat(registerArgCaptor.getValue().getDateOfBirth()).isEqualTo(appUserDto.getDateOfBirth());
 		assertThat(registerArgCaptor.getValue().getUsername()).isEqualTo(appUserDto.getUsername());
 		assertThat(registerArgCaptor.getValue().getPassword()).isNotEqualTo(appUserDto.getPassword());
-		assertThat(registerArgCaptor.getValue().getUserRole()).isEqualTo(UserRole.ROLE_USER);
+		assertThat(registerArgCaptor.getValue().getUserRole()).isEqualTo(Role.ROLE_USER);
 	}
 
 	/**

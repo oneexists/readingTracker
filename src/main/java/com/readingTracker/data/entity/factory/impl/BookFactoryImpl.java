@@ -8,8 +8,9 @@ import com.readingTracker.data.entity.factory.BookFactory;
 public class BookFactoryImpl implements BookFactory {
 
 	@Override
-	public Book create(Long bookId, String title, Author author, String language, int pages, AppUser user) {
-		return new Book(bookId, title, author, language, pages, user);
+	public Book create(Long bookId, String title, Author author, String language, int pages, String coverImage,
+			AppUser user) {
+		return new Book(bookId, title, author, language, pages, coverImage, user);
 	}
 
 }

@@ -59,9 +59,7 @@ public class BookServiceImpl implements BookService {
 			updateBook.setLogs(book.getLogs());
 			updateBook.setUser(book.getUser());
 			return repository.saveAndFlush(updateBook);
-		}).orElseGet(() -> {
-			return repository.save(book);
-		});
+		}).orElseGet(() -> repository.save(book));
 	}
 
 	@Override
