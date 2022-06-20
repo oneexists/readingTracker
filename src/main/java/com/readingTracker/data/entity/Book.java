@@ -21,6 +21,7 @@ public class Book implements Serializable {
 	private Author author;
 	private String language;
 	private int pages;
+	private String coverImage;
 	@OneToMany(mappedBy = "book")
 	private Set<Log> logs = new HashSet<>();
 	@ManyToOne
@@ -30,18 +31,23 @@ public class Book implements Serializable {
 		super();
 	}
 
-	public Book(Long id, String title, Author author, String language, int pages, AppUser user) {
+	public Book(Long id, String title, Author author, String language, int pages, String coverImage, AppUser user) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.language = language;
 		this.pages = pages;
+		this.setCoverImage(coverImage);
 		this.user = user;
 	}
 
 	public Author getAuthor() {
 		return author;
+	}
+
+	public String getCoverImage() {
+		return coverImage;
 	}
 
 	public Long getId() {
@@ -70,6 +76,10 @@ public class Book implements Serializable {
 
 	public void setAuthor(Author author) {
 		this.author = author;
+	}
+
+	public void setCoverImage(String coverImage) {
+		this.coverImage = coverImage;
 	}
 
 	public void setLanguage(String language) {

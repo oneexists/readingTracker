@@ -18,6 +18,7 @@ public class BookDto {
 	@Size(min = 2)
 	private String language;
 	private int pages;
+	private String coverImage;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@PastOrPresent
 	private LocalDate start;
@@ -57,64 +58,72 @@ public class BookDto {
 		this.username = username;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public int getPages() {
-		return pages;
-	}
-
-	public void setPages(int pages) {
-		this.pages = pages;
-	}
-
-	public LocalDate getStart() {
-		return start;
-	}
-
-	public void setStart(LocalDate start) {
-		this.start = start;
+	public String getCoverImage() {
+		return coverImage;
 	}
 
 	public LocalDate getFinish() {
 		return finish;
 	}
 
-	public void setFinish(LocalDate finish) {
-		this.finish = finish;
+	public Long getId() {
+		return id;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public int getPages() {
+		return pages;
+	}
+
+	public LocalDate getStart() {
+		return start;
+	}
+
+	public String getTitle() {
+		return title;
 	}
 
 	public String getUsername() {
 		return username;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public void setCoverImage(String coverImage) {
+		this.coverImage = coverImage;
+	}
+
+	public void setFinish(LocalDate finish) {
+		this.finish = finish;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public void setPages(int pages) {
+		this.pages = pages;
+	}
+
+	public void setStart(LocalDate start) {
+		this.start = start;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setUsername(String username) {

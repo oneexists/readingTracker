@@ -17,7 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.entity.Author;
 import com.readingTracker.data.entity.Book;
-import com.readingTracker.data.entity.UserRole;
+import com.readingTracker.data.entity.Role;
 import com.readingTracker.data.entity.factory.AppUserProvider;
 import com.readingTracker.data.entity.factory.AuthorProvider;
 import com.readingTracker.data.entity.factory.BookProvider;
@@ -47,10 +47,10 @@ class BookServiceTests {
 	void setUp() {
 		service = new BookServiceImpl(repository, appUserService);
 		appUser = AppUserProvider.getFactory().create("Jesse Jackson", "user", "magnets",
-				LocalDate.now().minusYears(25), UserRole.ROLE_USER);
+				LocalDate.now().minusYears(25), Role.ROLE_USER);
 		author = AuthorProvider.getFactory().create(5L, "Walt Whitman");
-		newBook = BookProvider.getFactory().create(null, null, null, null, 0, null);
-		testBook = BookProvider.getFactory().create(2L, "book title", author, "English", 32, appUser);
+		newBook = BookProvider.getFactory().create(null, null, null, null, 0, null, null);
+		testBook = BookProvider.getFactory().create(2L, "book title", author, "English", 32, null, appUser);
 	}
 
 	@AfterEach
