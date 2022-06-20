@@ -63,9 +63,7 @@ public class LogServiceImpl implements LogService {
 			updateLog.setStart(log.getStart());
 			updateLog.setFinish(log.getFinish());
 			return repository.saveAndFlush(updateLog);
-		}).orElseGet(() -> {
-			return repository.save(log);
-		});
+		}).orElseGet(() -> repository.save(log));
 	}
 
 	@Override

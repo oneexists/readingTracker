@@ -47,9 +47,7 @@ public class AuthorServiceImpl implements AuthorService {
 			updateAuthor.setName(author.getName());
 			updateAuthor.setBooks(author.getBooks());
 			return repository.saveAndFlush(updateAuthor);
-		}).orElseGet(() -> {
-			return repository.save(author);
-		});
+		}).orElseGet(() -> repository.save(author));
 	}
 
 	@Override
