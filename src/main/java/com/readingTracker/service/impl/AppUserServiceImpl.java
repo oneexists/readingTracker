@@ -23,7 +23,9 @@ import com.readingTracker.data.entity.Role;
 import com.readingTracker.data.entity.factory.AppUserProvider;
 import com.readingTracker.data.repository.AppUserRepository;
 import com.readingTracker.service.AppUserService;
+import com.readingTracker.service.exceptions.AppUserInvalidDobException;
 import com.readingTracker.service.exceptions.AppUserNotFoundException;
+import com.readingTracker.service.exceptions.AppUserTakenUsernameException;
 import com.readingTracker.web.dto.AppUserRegistrationDto;
 
 @Service
@@ -36,12 +38,6 @@ public class AppUserServiceImpl implements AppUserService {
 	public AppUserServiceImpl(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
 		this.appUserRepository = appUserRepository;
 		this.passwordEncoder = passwordEncoder;
-	}
-
-	@Override
-	public AppUser saveUser(AppUser user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return appUserRepository.save(user);
 	}
 
 	@Override
@@ -90,6 +86,12 @@ public class AppUserServiceImpl implements AppUserService {
 
 	@Override
 	public AppUser registerUser(AppUserRegistrationDto appUserDto) {
+		if (appUserRepository.existsByUsername(appUserDto.getUsername())) {
+			throw new AppUserTakenUsernameException(appUserDto.getUsername());
+		}
+		if (LocalDate.parse(appUserDto.getDateOfBirth()).isAfter(LocalDate.now())) {
+			throw new AppUserInvalidDobException(appUserDto.getDateOfBirth());
+		}
 		return appUserRepository.save(AppUserProvider.getFactory().create(appUserDto.getName(),
 				appUserDto.getUsername(), passwordEncoder.encode(appUserDto.getPassword()),
 				LocalDate.parse(appUserDto.getDateOfBirth()), Role.ROLE_USER));
