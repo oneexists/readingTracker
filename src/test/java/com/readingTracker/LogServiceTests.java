@@ -25,8 +25,6 @@ import com.readingTracker.data.entity.factory.AuthorProvider;
 import com.readingTracker.data.entity.factory.BookProvider;
 import com.readingTracker.data.entity.factory.LogProvider;
 import com.readingTracker.data.repository.LogRepository;
-import com.readingTracker.service.AppUserService;
-import com.readingTracker.service.BookService;
 import com.readingTracker.service.LogService;
 import com.readingTracker.service.impl.LogServiceImpl;
 
@@ -44,10 +42,6 @@ class LogServiceTests {
 
 	@Mock
 	private LogRepository repository;
-	@Mock
-	private AppUserService appUserService;
-	@Mock
-	private BookService bookService;
 	private LogService service;
 
 	/**
@@ -55,7 +49,7 @@ class LogServiceTests {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		service = new LogServiceImpl(repository, appUserService, bookService);
+		service = new LogServiceImpl(repository);
 		author = AuthorProvider.getFactory().create(5L, "Walt Whitman");
 		appUser = AppUserProvider.getFactory().create("Jesse Jackson", "user", "magnets",
 				LocalDate.now().minusYears(25), Role.ROLE_USER);
