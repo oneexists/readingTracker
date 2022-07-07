@@ -22,7 +22,6 @@ import com.readingTracker.data.entity.factory.AppUserProvider;
 import com.readingTracker.data.entity.factory.AuthorProvider;
 import com.readingTracker.data.entity.factory.BookProvider;
 import com.readingTracker.data.repository.BookRepository;
-import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.BookService;
 import com.readingTracker.service.impl.BookServiceImpl;
 
@@ -39,13 +38,11 @@ class BookServiceTests {
 
 	@Mock
 	private BookRepository repository;
-	@Mock
-	private AppUserService appUserService;
 	private BookService service;
 
 	@BeforeEach
 	void setUp() {
-		service = new BookServiceImpl(repository, appUserService);
+		service = new BookServiceImpl(repository);
 		appUser = AppUserProvider.getFactory().create("Jesse Jackson", "user", "magnets",
 				LocalDate.now().minusYears(25), Role.ROLE_USER);
 		author = AuthorProvider.getFactory().create(5L, "Walt Whitman");

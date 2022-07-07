@@ -6,25 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.readingTracker.data.entity.AppUser;
 import com.readingTracker.data.entity.Book;
 import com.readingTracker.data.repository.BookRepository;
-import com.readingTracker.service.AppUserService;
 import com.readingTracker.service.BookService;
-import com.readingTracker.service.exceptions.AppUserNotFoundException;
 import com.readingTracker.service.exceptions.BookNotFoundException;
 
 @Service
 @Transactional
 public class BookServiceImpl implements BookService {
 	private final BookRepository repository;
-	private final AppUserService appUserService;
 
 	@Autowired
-	public BookServiceImpl(BookRepository repository, AppUserService appUserService) {
+	public BookServiceImpl(BookRepository repository) {
 		super();
 		this.repository = repository;
-		this.appUserService = appUserService;
 	}
 
 	@Override
@@ -35,13 +30,6 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public Book findById(Long id) {
 		return repository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
-	}
-
-	@Override
-	public List<Book> findByUsername(String username) {
-		AppUser user = appUserService.findByUsername(username)
-				.orElseThrow(() -> new AppUserNotFoundException(username));
-		return repository.findByUser(user);
 	}
 
 	@Override
