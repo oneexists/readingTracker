@@ -50,6 +50,10 @@ public class AppUser implements Serializable {
 		this.userRole = userRoles;
 	}
 
+	public Set<Book> getBooks() {
+		return Set.copyOf(books);
+	}
+
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
