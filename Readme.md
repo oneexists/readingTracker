@@ -1,8 +1,11 @@
 # Reading Tracker Spring Boot Application
 
-Provides a hypermedia RESTful API and web interface to create a digital bookshelf of books.
-Keep track of the books your bookshelf and the books you've read by adding books and reading
-logs to record the start and finish dates.
+Combines the tracking capabilities of services like [Goodreads](https://www.goodreads.com/)
+to keep track of reading habits and books on your bookshelf with the intention
+of tracking reading as a goal of language learning similar to the statistics
+provided through reading with [LinQ](https://www.lingq.com/en/). This provides a
+centralized location for keeping track of reading and see progress as the
+bookshelf fills with finished books.
 
 Sign in and view your bookshelf:
 
@@ -28,27 +31,14 @@ Add logs to track your reading:
 
 # Process Analysis
 
-- Initial security configuration provided by JWT web tokens were implemented utilizing the
-Intercepting Filter Pattern to allow for the definition of custom authentication and
-authorization filters to manage requests to the API.
+- Initial planning of interface was provided through Thymeleaf and Bootstrap.
+  This required separate security configuration to support both the integrated
+  front-end and the RESTful API. With the creation of a React front-end the
+  security configuration was considerably simplified. This allows for simply
+  supporting the RESTful API and creating a new web interface using React.
 
-  [Spring Boot and Spring Security with JWT including Access and Refresh Tokens](https://youtu.be/VVn9OG9nfH0)
-
-  [Intercepting Filter Pattern Introduction](https://www.baeldung.com/intercepting-filter-pattern-in-java)
-
-- Reconfiguration of the security implementation was integrated into the application to support
-login functionality for both the RESTful API and custom login form of the web interface.
-Further research into implementation options led to the definition of multiple security
-configurations to serve both login functionalities simultaneously.
-
-  [Spring Security Reference - Multiple HttpSecurity](https://docs.spring.io/spring-security/site/docs/5.4.2/reference/html5/#multiple-httpsecurity)
-
-  ![Registration Page](https://github.com/oneexists/readingTracker/blob/main/img/registration.png)
-
-  ![Login / Logout Page](https://github.com/oneexists/readingTracker/blob/main/img/login_logout_page.png)
-
-- Hypermedia driven RESTful API provides information dynamically with link relations to
-facilitate interaction
+- Hypermedia driven RESTful API provides information dynamically with link relations
+  to facilitate interaction
 
   [Spring Data REST Reference Guide](https://docs.spring.io/spring-data/rest/docs/current/reference/html/)
 
@@ -56,15 +46,17 @@ facilitate interaction
 
 # Target Process
 
+- Implement React front-end to support interaction with RESTful API
+
 - Provide additional reading summary statistics
 
 - Provide a dynamic list of logs
 
+- Create administrative dashboard of users and administrator account settings
+
 # Functional Requirements
 
 - RESTful API with JWT web token authorization
-
-- Security integration of web interface with login and user registration
 
 - Create, view, update, and delete books
 
@@ -73,15 +65,14 @@ facilitate interaction
 # Non-Functional Requirements
 
 - Look and Feel:
-    - add Bootstrap to improve UI display of forms
+    - addition of Bootstrap to improve UI display of forms
 
 - Usability:
     - provide hypermedia driven RESTful API
-    - Thymeleaf/Bootstrap front-end interface
+    - React/Bootstrap front-end interface
 
 - Security:
     - endpoint security of RESTful API using JWT web tokens
-    - web interface access using custom login and registration forms
 
 # Resources
 
