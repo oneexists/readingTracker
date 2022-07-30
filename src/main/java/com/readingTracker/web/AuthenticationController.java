@@ -42,14 +42,14 @@ public class AuthenticationController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
-	private JwtUtils jwtUtils;
+	private JwtUtils jwtUtil;
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody AppUserLoginDto loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
+		String jwt = jwtUtil.generateJwtToken(authentication);
 
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
